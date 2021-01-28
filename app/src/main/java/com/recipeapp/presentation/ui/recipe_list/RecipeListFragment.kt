@@ -50,7 +50,7 @@ class RecipeListFragment : Fragment() {
 
                 val errorState = viewModel.errorState.value
 
-                if(errorState.hasError){
+                if (errorState.hasError) {
 
                     AlertDialog.Builder(AmbientContext.current)
                         .setTitle("Network Error")
@@ -67,23 +67,28 @@ class RecipeListFragment : Fragment() {
     }
 
     @Composable
-    fun ViewRecipeList(){
+    fun ViewRecipeList() {
         val recipes = viewModel.recipes.value
         val query = viewModel.query.value
         val selectedCategory = viewModel.selectedFoodCategory.value
 
         Column {
 
-            Surface(modifier = Modifier
-                .fillMaxWidth(),
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth(),
                 color = Color.White,
-                elevation = 8.dp) {
+                elevation = 8.dp
+            ) {
 
                 Column {
-                    Row(modifier = Modifier
-                        .fillMaxWidth()) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
 
-                        TextField(value = query,
+                        TextField(
+                            value = query,
                             onValueChange = {
                                 viewModel.onQueryChange(it)
                             },
@@ -95,37 +100,42 @@ class RecipeListFragment : Fragment() {
                                 keyboardType = KeyboardType.Text,
                                 imeAction = ImeAction.Search
                             ),
-                            leadingIcon = { Icon(Icons.Filled.Search) } ,
+                            leadingIcon = { Icon(Icons.Filled.Search) },
                             onImeActionPerformed = { action, softKeyboardController ->
-                                if(action == ImeAction.Search){
+                                if (action == ImeAction.Search) {
 
                                     viewModel.search()
                                     softKeyboardController?.hideSoftwareKeyboard()
                                 }
                             },
                             textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
-                            backgroundColor = MaterialTheme.colors.surface)
+                            backgroundColor = MaterialTheme.colors.surface
+                        )
                     }
 
                     val scrollState = rememberScrollState()
 
-                    ScrollableRow(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 8.dp,
-                            bottom = 8.dp),
-                        scrollState = scrollState) {
+                    ScrollableRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 8.dp,
+                                bottom = 8.dp
+                            ),
+                        scrollState = scrollState
+                    ) {
                         getAllFoodCategories().forEach { category ->
 
                             scrollState.scrollTo(viewModel.categoryScrollPosition)
 
                             FoodCategoryChip(
-                                category =  category.value,
+                                category = category.value,
                                 onSelectedCategoryChange = {
                                     viewModel.onSelectedCategoryChange(it)
                                     viewModel.onChangeCategoryScrollPosition(scrollState.value)
-                                },isSelected = selectedCategory == category,
+                                }, isSelected = selectedCategory == category,
                                 onExecuteSearch = {
-                                    viewModel::search
+                                    viewModel.search()
                                 })
                         }
                     }
@@ -134,8 +144,8 @@ class RecipeListFragment : Fragment() {
 
             }
 
-            LazyColumn{
-                itemsIndexed(items = recipes){ _ , recipe ->
+            LazyColumn {
+                itemsIndexed(items = recipes) { _, recipe ->
                     RecipeCard(recipe = recipe, onClick = {
 
                     })

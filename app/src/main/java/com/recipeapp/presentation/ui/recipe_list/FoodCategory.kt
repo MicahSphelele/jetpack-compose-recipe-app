@@ -1,7 +1,7 @@
 package com.recipeapp.presentation.ui.recipe_list
 
 enum class FoodCategory(val value:String) {
-    CHICKEN(""),
+    CHICKEN("Chicken"),
     BEEF("Beef"),
     SOUP("Soup"),
     DESSERT("Dessert"),

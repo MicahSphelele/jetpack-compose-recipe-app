@@ -10,11 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.imageFromResource
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.unit.dp
-import com.recipeapp.R
 import com.recipeapp.domain.model.Recipe
 import com.recipeapp.util.DEFAULT_RECIPE_IMAGE
 import com.recipeapp.util.loadPicture
