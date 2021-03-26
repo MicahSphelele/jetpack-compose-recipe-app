@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.compose.foundation.ScrollableRow
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,9 +16,9 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -27,9 +26,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.recipeapp.R
 import com.recipeapp.presentation.components.FoodCategoryChip
 import com.recipeapp.presentation.components.RecipeCard
+import com.recipeapp.presentation.ui.AppAlertDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -51,15 +50,9 @@ class RecipeListFragment : Fragment() {
                 val errorState = viewModel.errorState.value
 
                 if (errorState.hasError) {
-
-                    AlertDialog.Builder(AmbientContext.current)
-                        .setTitle("Network Error")
-                        .setIcon(R.drawable.ic_error)
-                        .setCancelable(false)
-                        .setMessage("Something went wrong : ${errorState.errorMessage}")
-                        .setPositiveButton("Ok") { dialog, _ ->
-                            dialog.dismiss()
-                        }.show()
+                    AppAlertDialog(activity = requireActivity(),title = "Network Error",
+                        message = "Something went wrong : ${errorState.errorMessage}"
+                        , buttonText = "Ok", state = mutableStateOf(true))
 
                 }
             }
