@@ -9,6 +9,7 @@ import com.recipeapp.domain.model.ErrorState
 import com.recipeapp.domain.model.Recipe
 import com.recipeapp.network.NetworkServiceBuilder
 import com.recipeapp.repository.RecipeRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Named
 
@@ -17,19 +18,27 @@ class RecipeListViewModel @ViewModelInject constructor(
     @Named(NetworkServiceBuilder.NAMED_TOKEN)
     private val token: String
 ) : ViewModel() {
-    companion object {
-        private const val TAG = "RecipeListViewModel"
-    }
 
     val recipes: MutableState<List<Recipe>> = mutableStateOf(listOf())
     val errorState: MutableState<ErrorState> = mutableStateOf(ErrorState(false, null))
     val query = mutableStateOf("")
-    val selectedFoodCategory : MutableState<FoodCategory?> = mutableStateOf(null)
+    val selectedFoodCategory: MutableState<FoodCategory?> = mutableStateOf(null)
     var categoryScrollPosition = 0f
-
+    var loading = mutableStateOf(false)
 
     init {
         search()
+    }
+
+    private fun clearSelectedCategory() {
+        selectedFoodCategory.value = null
+    }
+
+    private fun resetSearchState() {
+        recipes.value = listOf()
+        if (selectedFoodCategory.value?.value != query.value){
+            clearSelectedCategory()
+        }
     }
 
     fun onQueryChange(query: String) {
@@ -38,7 +47,13 @@ class RecipeListViewModel @ViewModelInject constructor(
 
     fun search() {
         viewModelScope.launch {
+
+            loading.value = true
+            resetSearchState()
+            delay(5000)
+
             try {
+                loading.value = false
                 recipes.value = repository.search(token, 1, query.value)
             } catch (ex: Exception) {
                 ex.printStackTrace()
@@ -47,14 +62,14 @@ class RecipeListViewModel @ViewModelInject constructor(
         }
     }
 
-    fun onSelectedCategoryChange(category: String){
+    fun onSelectedCategoryChange(category: String) {
 
         val foodCategory = getFoodCategory(category)
         selectedFoodCategory.value = foodCategory
         onQueryChange(category)
     }
 
-    fun onChangeCategoryScrollPosition(posistion: Float){
+    fun onChangeCategoryScrollPosition(posistion: Float) {
         categoryScrollPosition = posistion
     }
 
