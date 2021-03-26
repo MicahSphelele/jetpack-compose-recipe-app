@@ -50,7 +50,7 @@ class RecipeListViewModel @ViewModelInject constructor(
 
             loading.value = true
             resetSearchState()
-            delay(5000)
+            delay(2000)
 
             try {
                 loading.value = false
