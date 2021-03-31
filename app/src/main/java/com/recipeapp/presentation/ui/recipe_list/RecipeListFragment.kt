@@ -11,21 +11,23 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.recipeapp.presentation.components.CircularIndeterminateProgressBar
-import com.recipeapp.presentation.components.RecipeCard
-import com.recipeapp.presentation.components.SearchAppBar
-import com.recipeapp.presentation.ui.AppAlertDialog
+import com.recipeapp.presentation.components.*
+import com.recipeapp.presentation.components.HeartAnimation.HeartButtonState.ACTIVE
+import com.recipeapp.presentation.components.HeartAnimation.HeartButtonState.IDLE
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 class RecipeListFragment : Fragment() {
 
     private val viewModel by viewModels<RecipeListViewModel>()
 
+    @ExperimentalCoroutinesApi
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,7 +49,6 @@ class RecipeListFragment : Fragment() {
                         buttonText = "Ok",
                         state = mutableStateOf(true)
                     )
-
                 }
             }
         }
