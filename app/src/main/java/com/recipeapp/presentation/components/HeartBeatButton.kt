@@ -22,7 +22,7 @@ import com.recipeapp.R
 import com.recipeapp.presentation.components.HeartAnimation.HeartButtonState.ACTIVE
 import com.recipeapp.presentation.components.HeartAnimation.HeartButtonState.IDLE
 import com.recipeapp.util.loadPicture
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+    import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @Composable
@@ -95,7 +95,7 @@ object HeartAnimation {
     private val idleIconSize = 50.dp
     private val expandedIconSize  = 80.dp
 
-    val heartColor = ColorPropKey(label = "heartColor")
+    private val heartColor = ColorPropKey(label = "heartColor")
     val heartSize = DpPropKey(label = "heartSize")
 
 
