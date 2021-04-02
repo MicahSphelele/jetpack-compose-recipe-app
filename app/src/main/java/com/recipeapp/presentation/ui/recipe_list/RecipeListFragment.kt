@@ -11,14 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.recipeapp.presentation.components.*
-import com.recipeapp.presentation.components.HeartAnimation.HeartButtonState.ACTIVE
-import com.recipeapp.presentation.components.HeartAnimation.HeartButtonState.IDLE
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -55,7 +53,7 @@ class RecipeListFragment : Fragment() {
     }
 
     @Composable
-    fun ViewRecipeList() {
+    private fun ViewRecipeList() {
         val recipes = viewModel.recipes.value
         val query = viewModel.query.value
         val selectedCategory = viewModel.selectedFoodCategory.value
@@ -63,8 +61,8 @@ class RecipeListFragment : Fragment() {
         Column {
             SearchAppBar(
                 query = query,
-                onQueryChange = viewModel::onQueryChange ,
-                executeSearch = viewModel::search ,
+                onQueryChange = viewModel::onQueryChange,
+                executeSearch = viewModel::search,
                 categoryScrollPosition = viewModel.categoryScrollPosition,
                 onSelectedCategoryChange = viewModel::onSelectedCategoryChange,
                 onChangeCategoryScrollPosition = viewModel::onChangeCategoryScrollPosition,
@@ -72,15 +70,22 @@ class RecipeListFragment : Fragment() {
             )
             val loading = viewModel.loading.value
 
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .fillMaxWidth()
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .fillMaxWidth()
             ) {
-                LazyColumn {
-                    itemsIndexed(items = recipes) { _, recipe ->
-                        RecipeCard(recipe = recipe, onClick = {
+                if (loading) {
 
-                        })
+                    LoadingRecipeListShimmer(cardHeight = 250.dp)
+
+                }else {
+                    LazyColumn {
+                        itemsIndexed(items = recipes) { _, recipe ->
+                            RecipeCard(recipe = recipe, onClick = {
+
+                            })
+                        }
                     }
                 }
 
@@ -88,4 +93,5 @@ class RecipeListFragment : Fragment() {
             }
         }
     }
+
 }
