@@ -35,9 +35,7 @@ class RecipeListViewModel @ViewModelInject constructor(
     }
 
     private fun resetSearchState() {
-
         recipes.value = listOf()
-
         if (selectedFoodCategory.value?.value != query.value){
             clearSelectedCategory()
         }
