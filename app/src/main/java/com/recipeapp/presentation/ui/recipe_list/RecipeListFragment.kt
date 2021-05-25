@@ -6,19 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBalanceWallet
-import androidx.compose.material.icons.filled.BrokenImage
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
@@ -88,13 +83,8 @@ class RecipeListFragment : Fragment() {
                         application.toggleAppTheme()
                     }
                 )
-            },
-            bottomBar = {
-                AppBottomBar()
-            },
-            drawerContent = {
-
             }
+
         ) {
             val loading = viewModel.loading.value
 
@@ -120,35 +110,6 @@ class RecipeListFragment : Fragment() {
 
                 CircularIndeterminateProgressBar(isDisplayed = loading)
             }
-        }
-    }
-
-    @Composable
-    fun AppBottomBar() {
-        BottomNavigation(
-            elevation = 12.dp,
-            backgroundColor = MaterialTheme.colors.secondary
-        ) {
-            BottomNavigationItem(
-                icon = { Icon(Icons.Default.BrokenImage) },
-                selected = false,
-                onClick = {
-
-                })
-
-            BottomNavigationItem(
-                icon = { Icon(Icons.Default.Search) },
-                selected = false,
-                onClick = {
-
-                })
-            BottomNavigationItem(
-                icon = { Icon(Icons.Default.AccountBalanceWallet) },
-                selected = false,
-                onClick = {
-
-                })
-
         }
     }
 }
