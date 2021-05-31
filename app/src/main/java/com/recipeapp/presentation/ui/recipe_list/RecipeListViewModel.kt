@@ -1,5 +1,8 @@
 package com.recipeapp.presentation.ui.recipe_list
 
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.hilt.lifecycle.ViewModelInject
@@ -17,7 +20,8 @@ import javax.inject.Named
 class RecipeListViewModel @ViewModelInject constructor(
     private val repository: RecipeRepository,
     @Named(NetworkServiceBuilder.NAMED_TOKEN)
-    private val token: String
+    private val token: String,
+    private val connectivityManager: ConnectivityManager
 ) : ViewModel() {
 
     object RecipeListViewModelConstants {
@@ -41,9 +45,10 @@ class RecipeListViewModel @ViewModelInject constructor(
         this.query.value = query
     }
 
+    @Suppress("DEPRECATION")
     private fun search() {
         viewModelScope.launch {
-            AppLogger.info("Start querying data")
+            AppLogger.info("Start querying data : ${query.value}")
             loading.value = true
             resetSearchState()
             delay(2500)
@@ -53,6 +58,7 @@ class RecipeListViewModel @ViewModelInject constructor(
                 recipes.value = repository.search(token, page.value, query.value)
             } catch (ex: Exception) {
                 ex.printStackTrace()
+                AppLogger.error("Something went wrong on the server : ${ex.message}")
                 errorState.value = ErrorState(true, ex.message)
             }
         }
@@ -70,7 +76,7 @@ class RecipeListViewModel @ViewModelInject constructor(
     }
 
     fun onChangeRecipeListScrollPosition(position: Int) {
-        recipeListScrollPosition  = position
+        recipeListScrollPosition = position
     }
 
     fun nextPage() {
@@ -100,14 +106,14 @@ class RecipeListViewModel @ViewModelInject constructor(
         recipes.value = listOf()
         page.value = 1
         onChangeRecipeListScrollPosition(0)
-        if (selectedFoodCategory.value?.value != query.value){
+        if (selectedFoodCategory.value?.value != query.value) {
             clearSelectedCategory()
         }
     }
 
     /**
-    * Append new recipes to the current list of recipes
-    */
+     * Append new recipes to the current list of recipes
+     */
 
     private fun appendRecipes(newRecipes: List<Recipe>) {
         val current = ArrayList(this.recipes.value)
@@ -118,7 +124,6 @@ class RecipeListViewModel @ViewModelInject constructor(
     private fun incrementPage() {
         page.value = page.value + 1
     }
-
 
 
 }
