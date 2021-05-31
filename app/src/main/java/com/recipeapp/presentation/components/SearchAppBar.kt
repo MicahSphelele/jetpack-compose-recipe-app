@@ -6,6 +6,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Bedtime
 import androidx.compose.material.icons.filled.NightsStay
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
@@ -77,7 +78,7 @@ fun SearchAppBar(
                             this.top.linkTo(this.parent.top)
                             this.bottom.linkTo(this.parent.bottom)
                     }) {
-                        Icon(Icons.Filled.NightsStay)
+                        Icon(Icons.Filled.Bedtime)
                     }
                 }
             }
