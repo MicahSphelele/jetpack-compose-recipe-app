@@ -6,18 +6,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.google.gson.annotations.Until
 import com.recipeapp.presentation.ui.recipe_list.FoodCategory
 import com.recipeapp.presentation.ui.recipe_list.getAllFoodCategories
 
@@ -25,7 +22,7 @@ import com.recipeapp.presentation.ui.recipe_list.getAllFoodCategories
 fun SearchAppBar(
     query: String,
     onQueryChange: (String) -> Unit,
-    executeSearch: () -> Unit, categoryScrollPosition: Float,
+    onExecuteSearch: () -> Unit, categoryScrollPosition: Float,
     onSelectedCategoryChange: (String) -> Unit,
     onChangeCategoryScrollPosition: (Float) -> Unit,
     selectedCategory: FoodCategory?,
@@ -61,7 +58,7 @@ fun SearchAppBar(
                     leadingIcon = { Icon(Icons.Filled.Search) },
                     onImeActionPerformed = { action, softKeyboardController ->
                         if (action == ImeAction.Search) {
-                            executeSearch()
+                            onExecuteSearch()
                             softKeyboardController?.hideSoftwareKeyboard()
                         }
                     },
@@ -107,7 +104,7 @@ fun SearchAppBar(
                             onChangeCategoryScrollPosition(scrollState.value)
                         }, isSelected = selectedCategory == category,
                         onExecuteSearch = {
-                            executeSearch()
+                            onExecuteSearch()
                         })
                 }
             }
