@@ -1,16 +1,20 @@
 package com.recipeapp.presentation.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.recipeapp.domain.model.Recipe
 import com.recipeapp.util.DEFAULT_RECIPE_IMAGE
@@ -53,9 +57,12 @@ fun RecipeCard(recipe: Recipe,onClick:() -> Unit){
                         .fillMaxWidth(0.85f),
                         style = MaterialTheme.typography.h3)
 
-                    Text(text = recipe.rating.toString(), modifier = Modifier
+                    Text(text = recipe.rating.toString(),
+                        textAlign = TextAlign.Center,color = Color.White,
+                        modifier = Modifier
                         .fillMaxWidth()
-                        .wrapContentWidth(Alignment.End)
+                        .background(color = MaterialTheme.colors.primary, shape = CircleShape)
+                        .wrapContentSize(Alignment.Center)
                         .align(Alignment.CenterVertically),
                         style = MaterialTheme.typography.h5)
                 }

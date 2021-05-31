@@ -5,9 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
@@ -20,7 +25,7 @@ import androidx.lifecycle.lifecycleScope
 import com.recipeapp.presentation.BaseApp
 import com.recipeapp.presentation.components.*
 import com.recipeapp.presentation.theme.AppTheme
-import com.recipeapp.presentation.ui.recipe_list.RecipeListViewModel.*
+import com.recipeapp.presentation.ui.recipe_list.RecipeListViewModel.RecipeListViewModelConstants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch

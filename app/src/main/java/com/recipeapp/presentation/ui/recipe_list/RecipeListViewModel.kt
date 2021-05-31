@@ -48,7 +48,7 @@ class RecipeListViewModel @Inject constructor(
 
     fun onTriggeredEvent(event: RecipeListEvent) {
         viewModelScope.launch {
-            when(event) {
+            when (event) {
                 is RecipeListEvent.SearchEvent -> {
                     search()
                 }
@@ -60,20 +60,18 @@ class RecipeListViewModel @Inject constructor(
     }
 
     private suspend fun search() {
-        viewModelScope.launch {
-            AppLogger.info("Start querying data : ${query.value}")
-            loading.value = true
-            resetSearchState()
-            delay(2500)
+        AppLogger.info("Start querying data : ${query.value}")
+        loading.value = true
+        resetSearchState()
+        delay(2500)
 
-            try {
-                loading.value = false
-                recipes.value = repository.search(token, page.value, query.value)
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-                AppLogger.error("Something went wrong on the server : ${ex.message}")
-                errorState.value = ErrorState(true, ex.message)
-            }
+        try {
+            loading.value = false
+            recipes.value = repository.search(token, page.value, query.value)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            AppLogger.error("Something went wrong on the server : ${ex.message}")
+            errorState.value = ErrorState(true, ex.message)
         }
     }
 
@@ -81,7 +79,7 @@ class RecipeListViewModel @Inject constructor(
         val foodCategory = getFoodCategory(category)
         selectedFoodCategory.value = foodCategory
         onQueryChange(category)
-       onTriggeredEvent(RecipeListEvent.SearchEvent)
+        onTriggeredEvent(RecipeListEvent.SearchEvent)
     }
 
     fun onChangeCategoryScrollPosition(position: Float) {
@@ -93,21 +91,20 @@ class RecipeListViewModel @Inject constructor(
     }
 
     private suspend fun nextPage() {
-        viewModelScope.launch {
-            //Prevent duplicate events due to recompose happening too quickly
-            if ((recipeListScrollPosition + 1) >= (page.value * RecipeListViewModelConstants.PAGE_SIZE)) {
-                loading.value = true
-                incrementPage()
-                AppLogger.info("Next Page triggered : ${page.value}")
-                delay(1000)
-                if (page.value > 1) {
-                    val results = repository.search(token, page.value, query.value)
-                    AppLogger.info("Results : $results")
-                    appendRecipes(results)
-                }
-                loading.value = false
+        //Prevent duplicate events due to recompose happening too quickly
+        if ((recipeListScrollPosition + 1) >= (page.value * RecipeListViewModelConstants.PAGE_SIZE)) {
+            loading.value = true
+            incrementPage()
+            AppLogger.info("Next Page triggered : ${page.value}")
+            delay(1000)
+            if (page.value > 1) {
+                val results = repository.search(token, page.value, query.value)
+                AppLogger.info("Results : $results")
+                appendRecipes(results)
             }
+            loading.value = false
         }
+
     }
 
 
