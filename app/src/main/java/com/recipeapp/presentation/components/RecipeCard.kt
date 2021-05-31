@@ -48,6 +48,7 @@ fun RecipeCard(recipe: Recipe,onClick:() -> Unit){
             }
 
             recipe.title?.let { title ->
+                
                 Row(modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 12.dp,bottom = 12.dp,start = 8.dp,end = 8.dp)
