@@ -13,7 +13,7 @@ class DataStoreManager( private val context: Context) {
     private val Context.dataStore : DataStore<Preferences> by preferencesDataStore(name = "app_settings")
     private var appDataStore: DataStore<Preferences> = context.dataStore
 
-    private suspend fun saveBoolean(key: String, value: Boolean) {
+     suspend fun saveBoolean(key: String, value: Boolean) {
         val dataStoreKey = booleanPreferencesKey(key)
 
         appDataStore.edit { preferences ->
@@ -21,7 +21,7 @@ class DataStoreManager( private val context: Context) {
         }
     }
 
-    private suspend fun getBoolean(key: String): Boolean {
+     suspend fun getBoolean(key: String): Boolean {
         val dataStoreKey = booleanPreferencesKey(key)
         val preferences = appDataStore.data.first()
 
