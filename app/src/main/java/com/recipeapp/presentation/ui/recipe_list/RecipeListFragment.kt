@@ -125,7 +125,7 @@ class RecipeListFragment : Fragment() {
                             viewModel.onChangeRecipeListScrollPosition(index)
 
                             if ((index + 1) >= (page * RecipeListViewModelConstants.PAGE_SIZE) && !loading) {
-                                viewModel.nextPage()
+                                viewModel.onTriggeredEvent(RecipeListEvent.NextPageEvent)
                             }
                             RecipeCard(recipe = recipe, onClick = {
 

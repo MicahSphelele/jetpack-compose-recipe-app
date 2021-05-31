@@ -1,25 +1,27 @@
 package com.recipeapp.presentation.ui.recipe_list
 
-import android.net.ConnectivityManager
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.recipeapp.domain.model.ErrorState
+import com.recipeapp.domain.model.FoodCategory
 import com.recipeapp.domain.model.Recipe
+import com.recipeapp.domain.model.getFoodCategory
 import com.recipeapp.network.NetworkServiceBuilder
 import com.recipeapp.repository.RecipeRepository
 import com.recipeapp.util.AppLogger
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import javax.inject.Named
 
-class RecipeListViewModel @ViewModelInject constructor(
+@HiltViewModel
+class RecipeListViewModel @Inject constructor(
     private val repository: RecipeRepository,
     @Named(NetworkServiceBuilder.NAMED_TOKEN)
-    private val token: String,
-    private val connectivityManager: ConnectivityManager
+    private val token: String
 ) : ViewModel() {
 
     object RecipeListViewModelConstants {
@@ -36,15 +38,28 @@ class RecipeListViewModel @ViewModelInject constructor(
     private var recipeListScrollPosition = 0
 
     init {
-        search()
+        //search()
+        onTriggeredEvent(RecipeListEvent.SearchEvent)
     }
 
     fun onQueryChange(query: String) {
         this.query.value = query
     }
 
-    @Suppress("DEPRECATION")
-    private fun search() {
+    fun onTriggeredEvent(event: RecipeListEvent) {
+        viewModelScope.launch {
+            when(event) {
+                is RecipeListEvent.SearchEvent -> {
+                    search()
+                }
+                is RecipeListEvent.NextPageEvent -> {
+                    nextPage()
+                }
+            }
+        }
+    }
+
+    private suspend fun search() {
         viewModelScope.launch {
             AppLogger.info("Start querying data : ${query.value}")
             loading.value = true
@@ -66,7 +81,7 @@ class RecipeListViewModel @ViewModelInject constructor(
         val foodCategory = getFoodCategory(category)
         selectedFoodCategory.value = foodCategory
         onQueryChange(category)
-        search()
+       onTriggeredEvent(RecipeListEvent.SearchEvent)
     }
 
     fun onChangeCategoryScrollPosition(position: Float) {
@@ -77,7 +92,7 @@ class RecipeListViewModel @ViewModelInject constructor(
         recipeListScrollPosition = position
     }
 
-    fun nextPage() {
+    private suspend fun nextPage() {
         viewModelScope.launch {
             //Prevent duplicate events due to recompose happening too quickly
             if ((recipeListScrollPosition + 1) >= (page.value * RecipeListViewModelConstants.PAGE_SIZE)) {

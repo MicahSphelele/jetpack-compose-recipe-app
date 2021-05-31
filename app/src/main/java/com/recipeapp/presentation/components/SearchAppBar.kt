@@ -7,7 +7,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bedtime
-import androidx.compose.material.icons.filled.NightsStay
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,8 +15,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.recipeapp.presentation.ui.recipe_list.FoodCategory
-import com.recipeapp.presentation.ui.recipe_list.getAllFoodCategories
+import com.recipeapp.domain.model.FoodCategory
+import com.recipeapp.domain.model.getAllFoodCategories
 
 @Composable
 fun SearchAppBar(

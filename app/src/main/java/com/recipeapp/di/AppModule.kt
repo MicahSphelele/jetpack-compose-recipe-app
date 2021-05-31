@@ -6,12 +6,12 @@ import com.recipeapp.presentation.BaseApp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 @Module
 object AppModule {
 
@@ -21,9 +21,4 @@ object AppModule {
         return app as BaseApp
     }
 
-    @Singleton
-    @Provides
-    fun providesConnectivityManager(@ApplicationContext context: Context): ConnectivityManager? {
-        return context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
-    }
 }
