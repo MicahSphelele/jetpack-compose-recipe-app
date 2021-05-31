@@ -41,16 +41,16 @@ class RecipeListViewModel @ViewModelInject constructor(
         this.query.value = query
     }
 
-    fun search() {
+    private fun search() {
         viewModelScope.launch {
-
+            AppLogger.info("Start querying data")
             loading.value = true
             resetSearchState()
             delay(2500)
 
             try {
                 loading.value = false
-                recipes.value = repository.search(token, 1, query.value)
+                recipes.value = repository.search(token, page.value, query.value)
             } catch (ex: Exception) {
                 ex.printStackTrace()
                 errorState.value = ErrorState(true, ex.message)
@@ -59,10 +59,10 @@ class RecipeListViewModel @ViewModelInject constructor(
     }
 
     fun onSelectedCategoryChange(category: String) {
-
         val foodCategory = getFoodCategory(category)
         selectedFoodCategory.value = foodCategory
         onQueryChange(category)
+        search()
     }
 
     fun onChangeCategoryScrollPosition(position: Float) {
