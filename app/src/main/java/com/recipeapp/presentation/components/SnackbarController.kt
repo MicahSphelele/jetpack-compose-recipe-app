@@ -14,7 +14,6 @@ class SnackbarController(private val scope: CoroutineScope) {
 
     init {
         cancelActiveJob()
-
     }
 
     @ExperimentalMaterialApi
