@@ -17,19 +17,24 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.recipeapp.presentation.BaseApp
+import com.recipeapp.presentation.theme.AppTheme
 import com.recipeapp.util.AppConstants
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RecipeDetailFragment : Fragment() {
 
     private val viewModel by viewModels<RecipeDetailViewModel>()
-    private var recipeID = 0
+    @Inject
+    lateinit var application: BaseApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let { bundle ->
-            recipeID = bundle.getInt(AppConstants.KEY_RECIPE_ID)
+            val recipeID = bundle.getInt(AppConstants.KEY_RECIPE_ID)
+            viewModel.onTriggeredEvent(RecipeEvent.GetDetailedRecipeEvent(recipeID))
         }
     }
 
@@ -41,16 +46,25 @@ class RecipeDetailFragment : Fragment() {
 
         return ComposeView(requireContext()).apply { 
             setContent {
-                Column(modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.Center) {
-                    Text(text = "Recipe ID : $recipeID",
-                        style = TextStyle(color = MaterialTheme.colors.surface,
-                            fontSize = TextUnit.Sp(21)),
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
-                }
+
+                val loading = viewModel.loading.value
+                val recipe = viewModel.recipe.value
+
+                //AppTheme(darkTheme = application.isDarkTheme.value) {
+
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.Center) {
+                        Text(text = recipe?.let {
+                            "Selected Recipe : ${recipe.title}"
+                        }?: "Loading...",
+                            style = TextStyle(color = MaterialTheme.colors.onSecondary,
+                                fontSize = TextUnit.Sp(21)),
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                    }
+                //}
             }
         }
     }
-
 }
