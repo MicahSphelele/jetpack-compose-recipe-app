@@ -4,26 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.recipeapp.presentation.BaseApp
-import com.recipeapp.presentation.components.*
+import com.recipeapp.presentation.components.AppAlertDialog
+import com.recipeapp.presentation.components.RecipeList
+import com.recipeapp.presentation.components.SearchAppBar
+import com.recipeapp.presentation.components.SnackbarController
 import com.recipeapp.presentation.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -86,23 +80,25 @@ class RecipeListFragment : Fragment() {
                 SearchAppBar(
                     query = query,
                     onQueryChange = viewModel::onQueryChange,
-                    onExecuteSearch = {
-                        if (viewModel.selectedFoodCategory.value?.value == "Milk") {
-                            lifecycleScope.launch {
-                                snackbarController.showSnackbar(
-                                    scaffoldState = scaffoldState,
-                                    message = "Milk category selected",
-                                    actionLabel = "Dismiss"
-                                )
-                            }
-                        }
-                    },
+                    onExecuteSearch = viewModel::onTriggeredEvent,
                     categoryScrollPosition = viewModel.categoryScrollPosition,
                     onSelectedCategoryChange = viewModel::onSelectedCategoryChange,
                     onChangeCategoryScrollPosition = viewModel::onChangeCategoryScrollPosition,
                     selectedCategory = selectedCategory,
                     onToggleTheme = {
                         application.toggleAppTheme()
+                        lifecycleScope.launch {
+                            val message = if(application.isDarkTheme.value) {
+                                "Changed app them to dark"
+                            } else {
+                                "Changed app them to light"
+                            }
+                            snackbarController.showSnackbar(
+                                scaffoldState = scaffoldState,
+                                message = message,
+                                actionLabel = "Dismiss"
+                            )
+                        }
                     }
                 )
             }, scaffoldState = scaffoldState,
@@ -113,36 +109,14 @@ class RecipeListFragment : Fragment() {
         ) {
             val loading = viewModel.loading.value
 
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .fillMaxWidth()
-                    .background(color = MaterialTheme.colors.surface)
-            ) {
-                if (loading && recipes.isEmpty()) {
-
-                    LoadingRecipeListShimmer(cardHeight = 250.dp)
-
-                } else {
-                    LazyColumn {
-                        itemsIndexed(items = recipes) { index, recipe ->
-                            viewModel.onChangeRecipeListScrollPosition(index)
-
-                            if ((index + 1) >= (page * RecipeListViewModel.PAGE_SIZE) && !loading) {
-                                viewModel.onTriggeredEvent(RecipeListEvent.NextPageEvent)
-                            }
-                            RecipeCard(recipe = recipe, onClick = {
-
-                            })
-                        }
-                    }
-                }
-
-                CircularIndeterminateProgressBar(isDisplayed = loading)
-                DefaultSnackbar(snackbarHostSate = scaffoldState.snackbarHostState, onDismiss = {
-                    scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
-                }, modifier = Modifier.align(Alignment.BottomCenter))
-            }
+            RecipeList(
+                loading = loading,
+                recipes = recipes,
+                onChangeRecipeListScrollPosition = viewModel::onChangeRecipeListScrollPosition,
+                onTriggeredEvent = viewModel::onTriggeredEvent,
+                page = page,
+                scaffoldState = scaffoldState
+            )
         }
     }
 }

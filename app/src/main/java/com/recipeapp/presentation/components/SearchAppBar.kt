@@ -17,12 +17,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.recipeapp.domain.model.FoodCategory
 import com.recipeapp.domain.model.getAllFoodCategories
+import com.recipeapp.presentation.ui.recipe_list.RecipeListEvent
 
 @Composable
 fun SearchAppBar(
     query: String,
     onQueryChange: (String) -> Unit,
-    onExecuteSearch: () -> Unit, categoryScrollPosition: Float,
+    onExecuteSearch: (RecipeListEvent) -> Unit,
+    categoryScrollPosition: Float,
     onSelectedCategoryChange: (String) -> Unit,
     onChangeCategoryScrollPosition: (Float) -> Unit,
     selectedCategory: FoodCategory?,
@@ -58,7 +60,7 @@ fun SearchAppBar(
                     leadingIcon = { Icon(Icons.Filled.Search) },
                     onImeActionPerformed = { action, softKeyboardController ->
                         if (action == ImeAction.Search) {
-                            onExecuteSearch()
+                            onExecuteSearch(RecipeListEvent.SearchEvent)
                             softKeyboardController?.hideSoftwareKeyboard()
                         }
                     },
@@ -104,7 +106,7 @@ fun SearchAppBar(
                             onChangeCategoryScrollPosition(scrollState.value)
                         }, isSelected = selectedCategory == category,
                         onExecuteSearch = {
-                            onExecuteSearch()
+                            onExecuteSearch(RecipeListEvent.SearchEvent)
                         })
                 }
             }
