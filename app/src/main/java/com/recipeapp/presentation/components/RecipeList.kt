@@ -1,5 +1,6 @@
 package com.recipeapp.presentation.components
 
+import android.os.Bundle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,17 +13,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.recipeapp.R
 import com.recipeapp.domain.model.Recipe
 import com.recipeapp.presentation.ui.recipe_list.RecipeListEvent
 import com.recipeapp.presentation.ui.recipe_list.RecipeListViewModel
+import com.recipeapp.util.AppConstants
 
 @ExperimentalMaterialApi
 @Composable
-fun RecipeList(loading: Boolean,
-               recipes: List<Recipe>,
-               onChangeRecipeListScrollPosition: (Int) -> Unit,
-               onTriggeredEvent: (RecipeListEvent) -> Unit,
-               page: Int, scaffoldState: ScaffoldState) {
+fun RecipeList(
+    loading: Boolean,
+    recipes: List<Recipe>,
+    onChangeRecipeListScrollPosition: (Int) -> Unit,
+    onTriggeredEvent: (RecipeListEvent) -> Unit,
+    navController: NavController,
+    page: Int,
+    scaffoldState: ScaffoldState
+) {
 
     Box(
         modifier = Modifier
@@ -42,7 +50,11 @@ fun RecipeList(loading: Boolean,
                         onTriggeredEvent(RecipeListEvent.NextPageEvent)
                     }
                     RecipeCard(recipe = recipe, onClick = {
-
+                        val bundle = Bundle()
+                        recipe.id?.let { recipeID ->
+                            bundle.putInt(AppConstants.KEY_RECIPE_ID, recipeID)
+                            navController.navigate(R.id.recipeDetailsFragment, bundle)
+                        }
                     })
                 }
             }
@@ -54,6 +66,7 @@ fun RecipeList(loading: Boolean,
             onDismiss = {
                 scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
             },
-            modifier = Modifier.align(Alignment.BottomCenter))
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
 }

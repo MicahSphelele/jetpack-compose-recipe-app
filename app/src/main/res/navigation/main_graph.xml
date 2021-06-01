@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
     app:startDestination="@id/recipeListFragment">
 
@@ -11,12 +12,12 @@
         android:label="RecipeListFragment" >
         <action
             android:id="@+id/viewRecipe"
-            app:destination="@id/recipeFragment" />
+            app:destination="@id/recipeDetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/recipeFragment"
+        android:id="@+id/recipeDetailsFragment"
         android:name="com.recipeapp.presentation.ui.recipe.RecipeFragment"
-        android:label="RecipeFragment" >
+        android:label="RecipeFragment">
 
     </fragment>
 </navigation>

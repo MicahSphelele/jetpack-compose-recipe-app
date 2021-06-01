@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.recipeapp.presentation.BaseApp
 import com.recipeapp.presentation.components.AppAlertDialog
 import com.recipeapp.presentation.components.RecipeList
@@ -114,6 +115,7 @@ class RecipeListFragment : Fragment() {
                 recipes = recipes,
                 onChangeRecipeListScrollPosition = viewModel::onChangeRecipeListScrollPosition,
                 onTriggeredEvent = viewModel::onTriggeredEvent,
+                findNavController(),
                 page = page,
                 scaffoldState = scaffoldState
             )
