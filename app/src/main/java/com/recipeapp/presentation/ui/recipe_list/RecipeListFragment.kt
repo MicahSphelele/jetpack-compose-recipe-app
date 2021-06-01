@@ -90,9 +90,9 @@ class RecipeListFragment : Fragment() {
                         application.toggleAppTheme()
                         lifecycleScope.launch {
                             val message = if(application.isDarkTheme.value) {
-                                "Changed app them to dark"
+                                "Changed app theme to dark"
                             } else {
-                                "Changed app them to light"
+                                "Changed app theme to light"
                             }
                             snackbarController.showSnackbar(
                                 scaffoldState = scaffoldState,
