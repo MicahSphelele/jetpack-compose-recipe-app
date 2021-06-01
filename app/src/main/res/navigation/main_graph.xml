@@ -16,8 +16,8 @@
     </fragment>
     <fragment
         android:id="@+id/recipeDetailsFragment"
-        android:name="com.recipeapp.presentation.ui.recipe.RecipeFragment"
-        android:label="RecipeFragment">
+        android:name="com.recipeapp.presentation.ui.recipe.RecipeDetailFragment"
+        android:label="RecipeDetailFragment">
 
     </fragment>
 </navigation>
