@@ -93,21 +93,6 @@ class RecipeListViewModel @Inject constructor(
         }
     }
 
-    private suspend fun search() {
-        AppLogger.info("Start querying data : ${query.value}")
-        loading.value = true
-        resetSearchState()
-        delay(2500)
-
-        try {
-            loading.value = false
-            recipes.value = repository.search(token, page.value, query.value)
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            AppLogger.error("Something went wrong on the server : ${ex.message}")
-            errorState.value = ErrorState(true, ex.message)
-        }
-    }
 
     fun onSelectedCategoryChange(category: String) {
         val foodCategory = getFoodCategory(category)
@@ -123,6 +108,22 @@ class RecipeListViewModel @Inject constructor(
 
     fun onChangeRecipeListScrollPosition(position: Int) {
         setListScrollPosition(position)
+    }
+
+    private suspend fun search() {
+        AppLogger.info("Start querying data : ${query.value}")
+        loading.value = true
+        resetSearchState()
+        delay(2500)
+
+        try {
+            loading.value = false
+            recipes.value = repository.search(token, page.value, query.value)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            AppLogger.error("Something went wrong on the server : ${ex.message}")
+            errorState.value = ErrorState(true, ex.message)
+        }
     }
 
     private suspend fun nextPage() {
@@ -142,6 +143,30 @@ class RecipeListViewModel @Inject constructor(
 
     }
 
+    private suspend fun restoreAppState() {
+        loading.value = true
+        val results: MutableList<Recipe> = mutableListOf()
+        errorState.value = ErrorState(false, null)
+
+        for (p in 1..page.value) {
+
+            if (!errorState.value.hasError) {
+
+                try {
+                    val result = repository.search(token = token, page = p, query = query.value)
+                    results.addAll(result)
+                    if (p == page.value) {
+                        recipes.value = results
+                        loading.value = false
+                    }
+                } catch (ex: Exception) {
+                    AppLogger.error("Something went wrong on the server : ${ex.message}")
+                    errorState.value = ErrorState(true, "Failed to restore app state")
+                }
+
+            }
+        }
+    }
 
     private fun clearSelectedCategory() {
         setSelectedCategory(null)
@@ -190,29 +215,5 @@ class RecipeListViewModel @Inject constructor(
         savedStateHandle.set(STATE_KEY_QUERY, query)
     }
 
-    private suspend fun restoreAppState() {
-        loading.value = true
-        val results: MutableList<Recipe> = mutableListOf()
-        errorState.value = ErrorState(false, null)
-
-        for (p in 1..page.value) {
-
-            if (!errorState.value.hasError) {
-
-                try {
-                    val result = repository.search(token = token, page = p, query = query.value)
-                    results.addAll(result)
-                    if (p == page.value) {
-                        recipes.value = results
-                        loading.value = false
-                    }
-                } catch (ex: Exception) {
-                    AppLogger.error("Something went wrong on the server : ${ex.message}")
-                    errorState.value = ErrorState(true, "Failed to restore app state")
-                }
-
-            }
-        }
-    }
 
 }
