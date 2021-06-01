@@ -73,22 +73,21 @@ class RecipeListViewModel @Inject constructor(
     fun onTriggeredEvent(event: RecipeListEvent) {
         viewModelScope.launch {
             try {
+                when (event) {
+                    is RecipeListEvent.SearchEvent -> {
+                        search()
+                    }
+                    is RecipeListEvent.NextPageEvent -> {
+                        nextPage()
+                    }
 
+                    is RecipeListEvent.RestoreStateEvent -> {
+                        restoreAppState()
+                    }
+                }
             } catch (ex: Exception) {
                 ex.printStackTrace()
                 AppLogger.error(ex)
-            }
-            when (event) {
-                is RecipeListEvent.SearchEvent -> {
-                    search()
-                }
-                is RecipeListEvent.NextPageEvent -> {
-                    nextPage()
-                }
-
-                is RecipeListEvent.RestoreStateEvent -> {
-                    restoreAppState()
-                }
             }
         }
     }
