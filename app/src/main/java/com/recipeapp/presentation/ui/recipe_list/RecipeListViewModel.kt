@@ -26,7 +26,7 @@ class RecipeListViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    object RecipeListViewModelConstants {
+    companion object  {
         const val PAGE_SIZE = 30
         const val STATE_KEY_PAGE = "recipe.state.page.key"
         const val STATE_KEY_QUERY = "recipe.state.query.key"
@@ -44,17 +44,17 @@ class RecipeListViewModel @Inject constructor(
     private var recipeListScrollPosition = 0
 
     init {
-        savedStateHandle.get<Int>(RecipeListViewModelConstants.STATE_KEY_PAGE)?.let { savedPage ->
+        savedStateHandle.get<Int>(STATE_KEY_PAGE)?.let { savedPage ->
             setPage(savedPage)
         }
 
-        savedStateHandle.get<String>(RecipeListViewModelConstants.STATE_KEY_QUERY)?.let { savedQuery ->
+        savedStateHandle.get<String>(STATE_KEY_QUERY)?.let { savedQuery ->
             setQuery(savedQuery)
         }
-        savedStateHandle.get<Int>(RecipeListViewModelConstants.STATE_LIST_POSITION)?.let { savedPosition ->
+        savedStateHandle.get<Int>(STATE_LIST_POSITION)?.let { savedPosition ->
             setListScrollPosition(savedPosition)
         }
-        savedStateHandle.get<FoodCategory>(RecipeListViewModelConstants.STATE_KEY_SELECTED_CATEGORY)?.let { savedCategory ->
+        savedStateHandle.get<FoodCategory>(STATE_KEY_SELECTED_CATEGORY)?.let { savedCategory ->
             setSelectedCategory(savedCategory)
         }
 
@@ -127,7 +127,7 @@ class RecipeListViewModel @Inject constructor(
 
     private suspend fun nextPage() {
         //Prevent duplicate events due to recompose happening too quickly
-        if ((recipeListScrollPosition + 1) >= (page.value * RecipeListViewModelConstants.PAGE_SIZE)) {
+        if ((recipeListScrollPosition + 1) >= (page.value * PAGE_SIZE)) {
             loading.value = true
             incrementPage()
             AppLogger.info("Next Page triggered : ${page.value}")
@@ -172,22 +172,22 @@ class RecipeListViewModel @Inject constructor(
 
     private fun setListScrollPosition(position: Int) {
         recipeListScrollPosition = position
-        savedStateHandle.set(RecipeListViewModelConstants.STATE_LIST_POSITION, position)
+        savedStateHandle.set(STATE_LIST_POSITION, position)
     }
 
     private fun setPage(page: Int) {
         this.page.value = page
-        savedStateHandle.set(RecipeListViewModelConstants.STATE_KEY_PAGE, page)
+        savedStateHandle.set(STATE_KEY_PAGE, page)
     }
 
     private fun setSelectedCategory(category: FoodCategory?) {
         selectedFoodCategory.value = category
-        savedStateHandle.set(RecipeListViewModelConstants.STATE_KEY_SELECTED_CATEGORY, category)
+        savedStateHandle.set(STATE_KEY_SELECTED_CATEGORY, category)
     }
 
     private fun setQuery(query: String) {
         this.query.value = query
-        savedStateHandle.set(RecipeListViewModelConstants.STATE_KEY_QUERY, query)
+        savedStateHandle.set(STATE_KEY_QUERY, query)
     }
 
     private suspend fun restoreAppState() {

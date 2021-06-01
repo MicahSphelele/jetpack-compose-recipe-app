@@ -25,7 +25,6 @@ import androidx.lifecycle.lifecycleScope
 import com.recipeapp.presentation.BaseApp
 import com.recipeapp.presentation.components.*
 import com.recipeapp.presentation.theme.AppTheme
-import com.recipeapp.presentation.ui.recipe_list.RecipeListViewModel.RecipeListViewModelConstants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -129,7 +128,7 @@ class RecipeListFragment : Fragment() {
                         itemsIndexed(items = recipes) { index, recipe ->
                             viewModel.onChangeRecipeListScrollPosition(index)
 
-                            if ((index + 1) >= (page * RecipeListViewModelConstants.PAGE_SIZE) && !loading) {
+                            if ((index + 1) >= (page * RecipeListViewModel.PAGE_SIZE) && !loading) {
                                 viewModel.onTriggeredEvent(RecipeListEvent.NextPageEvent)
                             }
                             RecipeCard(recipe = recipe, onClick = {
