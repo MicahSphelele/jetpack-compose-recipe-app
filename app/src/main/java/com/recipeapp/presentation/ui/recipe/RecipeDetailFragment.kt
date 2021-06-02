@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
@@ -20,6 +20,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.recipeapp.domain.model.Recipe
 import com.recipeapp.presentation.BaseApp
+import com.recipeapp.presentation.components.CircularIndeterminateProgressBar
+import com.recipeapp.presentation.components.RecipeDetailView
 import com.recipeapp.presentation.theme.AppTheme
 import com.recipeapp.util.AppConstants
 import com.recipeapp.util.AppLogger
@@ -48,34 +50,39 @@ class RecipeDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        return ComposeView(requireContext()).apply { 
+        return ComposeView(requireContext()).apply {
             setContent {
 
                 val loading = viewModel.loading.value
                 val recipe = viewModel.recipe.value
 
                 AppTheme(darkTheme = application.isDarkTheme.value) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .fillMaxWidth()
-                            .background(color = MaterialTheme.colors.surface)
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .padding(16.dp),
-                            verticalArrangement = Arrangement.Center) {
-                            Text(text = recipe?.let {
-                                "Selected Recipe : ${recipe.title}"
-                            }?: "Loading...",
-                                style = TextStyle(color = MaterialTheme.colors.onSecondary,
-                                    fontSize = TextUnit.Sp(21)),
-                                modifier = Modifier.align(Alignment.CenterHorizontally)
-                            )
-                        }
-                    }
-
+                    ViewRecipeDetails(recipe = recipe, loading = loading)
                 }
+            }
+        }
+    }
+
+    @Composable
+    private fun ViewRecipeDetails(
+        recipe: Recipe?,
+        loading: Boolean
+    ) {
+        val scaffoldState = rememberScaffoldState()
+
+        Scaffold(scaffoldState = scaffoldState,
+            snackbarHost = { scaffoldState.snackbarHostState }
+        ) {
+            Box(modifier = Modifier.fillMaxSize()) {
+
+                if (loading && recipe == null) {
+                    AppLogger.info("Loading recipe details...")
+                } else {
+                    recipe?.let {
+                        RecipeDetailView(recipe = it)
+                    }
+                }
+                CircularIndeterminateProgressBar(isDisplayed = loading, 0.3f)
             }
         }
     }

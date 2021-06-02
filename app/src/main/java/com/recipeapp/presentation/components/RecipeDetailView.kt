@@ -55,7 +55,7 @@ fun RecipeDetailView(recipe: Recipe) {
                     Text(text = recipe.rating.toString(),
                         textAlign = TextAlign.Center,color = Color.White,
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .fillMaxSize()
                             .background(
                                 color = MaterialTheme.colors.primary,
                                 shape = CircleShape
