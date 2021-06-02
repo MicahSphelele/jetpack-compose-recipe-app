@@ -113,11 +113,11 @@ class RecipeListViewModel @Inject constructor(
         AppLogger.info("Start querying data : ${query.value}")
         loading.value = true
         resetSearchState()
-        delay(2500)
+        delay(1000)
 
         try {
-            loading.value = false
             recipes.value = repository.search(token, page.value, query.value)
+            loading.value = false
         } catch (ex: Exception) {
             ex.printStackTrace()
             AppLogger.error("Something went wrong on the server : ${ex.message}")
