@@ -53,6 +53,7 @@ fun RecipeList(
                         val bundle = Bundle()
                         recipe.id?.let { recipeID ->
                             bundle.putInt(AppConstants.KEY_RECIPE_ID, recipeID)
+                            bundle.putParcelable(AppConstants.KEY_RECIPE, recipe)
                             navController.navigate(R.id.recipeDetailsFragment, bundle)
                         }
                     })
