@@ -4,9 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
@@ -20,6 +19,7 @@ import androidx.fragment.app.viewModels
 import com.recipeapp.presentation.BaseApp
 import com.recipeapp.presentation.theme.AppTheme
 import com.recipeapp.util.AppConstants
+import com.recipeapp.util.AppLogger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -50,20 +50,30 @@ class RecipeDetailFragment : Fragment() {
                 val loading = viewModel.loading.value
                 val recipe = viewModel.recipe.value
 
-                //AppTheme(darkTheme = application.isDarkTheme.value) {
+                AppLogger.info("isDarkTheme: ${application.isDarkTheme.value}")
 
-                    Column(
-                        modifier = Modifier.padding(16.dp),
-                        verticalArrangement = Arrangement.Center) {
-                        Text(text = recipe?.let {
-                            "Selected Recipe : ${recipe.title}"
-                        }?: "Loading...",
-                            style = TextStyle(color = MaterialTheme.colors.onSecondary,
-                                fontSize = TextUnit.Sp(21)),
-                            modifier = Modifier.align(Alignment.CenterHorizontally)
-                        )
+                AppTheme(darkTheme = application.isDarkTheme.value) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .fillMaxWidth()
+                            .background(color = MaterialTheme.colors.surface)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.Center) {
+                            Text(text = recipe?.let {
+                                "Selected Recipe : ${recipe.title}"
+                            }?: "Loading...",
+                                style = TextStyle(color = MaterialTheme.colors.onSecondary,
+                                    fontSize = TextUnit.Sp(21)),
+                                modifier = Modifier.align(Alignment.CenterHorizontally)
+                            )
+                        }
                     }
-                //}
+
+                }
             }
         }
     }

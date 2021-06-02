@@ -46,7 +46,6 @@ class RecipeListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
 
-
                 AppTheme(darkTheme = application.isDarkTheme.value) {
 
                     ViewRecipeList()
@@ -102,7 +101,8 @@ class RecipeListFragment : Fragment() {
                         }
                     }
                 )
-            }, scaffoldState = scaffoldState,
+            },
+            scaffoldState = scaffoldState,
             snackbarHost = {
                 scaffoldState.snackbarHostState
             }
