@@ -8,6 +8,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
@@ -16,6 +18,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.recipeapp.domain.model.Recipe
 import com.recipeapp.presentation.BaseApp
 import com.recipeapp.presentation.theme.AppTheme
 import com.recipeapp.util.AppConstants
@@ -27,6 +30,7 @@ import javax.inject.Inject
 class RecipeDetailFragment : Fragment() {
 
     private val viewModel by viewModels<RecipeDetailViewModel>()
+
     @Inject
     lateinit var application: BaseApp
 
@@ -49,8 +53,6 @@ class RecipeDetailFragment : Fragment() {
 
                 val loading = viewModel.loading.value
                 val recipe = viewModel.recipe.value
-
-                AppLogger.info("isDarkTheme: ${application.isDarkTheme.value}")
 
                 AppTheme(darkTheme = application.isDarkTheme.value) {
                     Box(
