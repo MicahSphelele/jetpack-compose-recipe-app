@@ -42,8 +42,9 @@ fun RecipeCard(recipe: Recipe,onClick:() -> Unit){
                     Image(
                         bitmap = image.asImageBitmap(),
                         modifier = Modifier.fillMaxWidth()
-                            .preferredHeight(225.dp),
-                        contentScale = ContentScale.Crop)
+                            .requiredHeight(225.dp),
+                        contentScale = ContentScale.Crop,
+                        contentDescription = "Recipe Card Image")
                 }
             }
 

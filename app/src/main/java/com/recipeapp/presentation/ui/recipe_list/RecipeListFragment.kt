@@ -9,6 +9,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,13 +20,14 @@ import com.recipeapp.presentation.BaseApp
 import com.recipeapp.presentation.components.AppAlertDialog
 import com.recipeapp.presentation.components.RecipeList
 import com.recipeapp.presentation.components.SearchAppBar
-import com.recipeapp.presentation.components.SnackbarController
+import com.recipeapp.presentation.components.util.SnackbarController
 import com.recipeapp.presentation.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalComposeUiApi
 @AndroidEntryPoint
 class RecipeListFragment : Fragment() {
 
@@ -34,6 +37,8 @@ class RecipeListFragment : Fragment() {
     lateinit var application: BaseApp
 
     private val snackbarController = SnackbarController(lifecycleScope)
+
+    private val dialogState = mutableStateOf(true)
 
     @ExperimentalMaterialApi
     @ExperimentalCoroutinesApi
@@ -58,7 +63,7 @@ class RecipeListFragment : Fragment() {
                             title = "Network Error",
                             message = "Something went wrong : ${errorState.errorMessage}",
                             buttonText = "Ok",
-                            state = mutableStateOf(true)
+                            state = dialogState
                         )
                     }
                 }
@@ -81,9 +86,7 @@ class RecipeListFragment : Fragment() {
                     query = query,
                     onQueryChange = viewModel::onQueryChange,
                     onExecuteSearch = viewModel::onTriggeredEvent,
-                    categoryScrollPosition = viewModel.categoryScrollPosition,
                     onSelectedCategoryChange = viewModel::onSelectedCategoryChange,
-                    onChangeCategoryScrollPosition = viewModel::onChangeCategoryScrollPosition,
                     selectedCategory = selectedCategory,
                     onToggleTheme = {
                         application.toggleAppTheme()

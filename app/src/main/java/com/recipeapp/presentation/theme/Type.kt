@@ -3,17 +3,17 @@ package com.recipeapp.presentation.theme
 import androidx.compose.material.Typography
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.font.font
-import androidx.compose.ui.text.font.fontFamily
 import androidx.compose.ui.unit.sp
 import com.recipeapp.R
 
-val Lato = fontFamily(
-    font(R.font.lato_light, FontWeight.W300),
-    font(R.font.lato_regular, FontWeight.W400),
-    font(R.font.lato_black, FontWeight.W500),
-    font(R.font.lato_bold, FontWeight.W600)
+val Lato = FontFamily(
+    Font(R.font.lato_light, FontWeight.W300),
+    Font(R.font.lato_regular, FontWeight.W400),
+    Font(R.font.lato_black, FontWeight.W500),
+    Font(R.font.lato_bold, FontWeight.W600)
 )
 
 val LatoTypography = Typography(

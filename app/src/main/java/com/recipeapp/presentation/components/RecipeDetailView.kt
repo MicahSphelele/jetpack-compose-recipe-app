@@ -1,9 +1,9 @@
 package com.recipeapp.presentation.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -22,72 +22,73 @@ import com.recipeapp.util.loadPicture
 @Composable
 fun RecipeDetailView(recipe: Recipe) {
 
-    ScrollableColumn(modifier = Modifier.fillMaxWidth()) {
+    LazyColumn(modifier = Modifier.fillMaxWidth()) {
+        item {
+            recipe.featuredImage?.let { url ->
+                val image= loadPicture(url = url, default = DEFAULT_RECIPE_IMAGE).value
 
-        recipe.featuredImage?.let { url ->
-            val image= loadPicture(url = url, default = DEFAULT_RECIPE_IMAGE).value
-
-            image?.let {
-                Image(
-                    bitmap = image.asImageBitmap(),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .preferredHeight(260.dp),
-                    contentScale = ContentScale.Crop
-                )
-            }
-        }
-
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-        ) {
-            recipe.title?.let { title ->
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)) {
-
-                    Text(text = title, modifier = Modifier
-                        .fillMaxWidth(0.85f)
-                        .wrapContentWidth(Alignment.Start),
-                        style = MaterialTheme.typography.h3)
-
-                    Text(text = recipe.rating.toString(),
-                        textAlign = TextAlign.Center,color = Color.White,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(
-                                color = MaterialTheme.colors.primary,
-                                shape = CircleShape
-                            )
-                            .wrapContentSize(Alignment.Center)
-                            .align(Alignment.CenterVertically),
-                        style = MaterialTheme.typography.h5
-                    )
-                }
-                recipe.publisher?.let { publisher ->
-
-                    val dateUpdated = recipe.dateUpdated
-
-                    Text(text = if (!dateUpdated.isNullOrEmpty()) {
-                        "Updated $dateUpdated by $publisher"
-                    }else {
-                        "Updated by $publisher"
-                    },
-                      modifier = Modifier
-                          .fillMaxWidth()
-                          .padding(bottom = 8.dp),
-                        style = MaterialTheme.typography.caption)
-                }
-
-                for (ingredient in recipe.ingredients) {
-                    Text(
-                        text = ingredient,
+                image?.let {
+                    Image(
+                        bitmap = image.asImageBitmap(),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 8.dp),
-                        style = MaterialTheme.typography.body1
-                    )
+                            .requiredHeight(260.dp),
+                        contentScale = ContentScale.Crop,
+                        contentDescription = "Detailed Recipe Image")
+                }
+            }
+
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+            ) {
+                recipe.title?.let { title ->
+                    Row(modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)) {
+
+                        Text(text = title, modifier = Modifier
+                            .fillMaxWidth(0.85f)
+                            .wrapContentWidth(Alignment.Start),
+                            style = MaterialTheme.typography.h3)
+
+                        Text(text = recipe.rating.toString(),
+                            textAlign = TextAlign.Center,color = Color.White,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(
+                                    color = MaterialTheme.colors.primary,
+                                    shape = CircleShape
+                                )
+                                .wrapContentSize(Alignment.Center)
+                                .align(Alignment.CenterVertically),
+                            style = MaterialTheme.typography.h5
+                        )
+                    }
+                    recipe.publisher?.let { publisher ->
+
+                        val dateUpdated = recipe.dateUpdated
+
+                        Text(text = if (!dateUpdated.isNullOrEmpty()) {
+                            "Updated $dateUpdated by $publisher"
+                        }else {
+                            "Updated by $publisher"
+                        },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp),
+                            style = MaterialTheme.typography.caption)
+                    }
+
+                    for (ingredient in recipe.ingredients) {
+                        Text(
+                            text = ingredient,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp),
+                            style = MaterialTheme.typography.body1
+                        )
+                    }
                 }
             }
         }

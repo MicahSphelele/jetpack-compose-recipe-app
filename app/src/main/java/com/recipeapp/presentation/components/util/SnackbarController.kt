@@ -1,4 +1,4 @@
-package com.recipeapp.presentation.components
+package com.recipeapp.presentation.components.util
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ScaffoldState
