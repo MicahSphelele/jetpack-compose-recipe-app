@@ -5,11 +5,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -25,7 +28,7 @@ fun RecipeDetailView(recipe: Recipe) {
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
         item {
             recipe.featuredImage?.let { url ->
-                val image= loadPicture(url = url, default = DEFAULT_RECIPE_IMAGE).value
+                val image = loadPicture(url = url, default = DEFAULT_RECIPE_IMAGE).value
 
                 image?.let {
                     Image(
@@ -34,26 +37,33 @@ fun RecipeDetailView(recipe: Recipe) {
                             .fillMaxWidth()
                             .requiredHeight(260.dp),
                         contentScale = ContentScale.Crop,
-                        contentDescription = "Detailed Recipe Image")
+                        contentDescription = "Detailed Recipe Image"
+                    )
                 }
             }
 
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
             ) {
                 recipe.title?.let { title ->
-                    Row(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
+                    ) {
 
-                        Text(text = title, modifier = Modifier
-                            .fillMaxWidth(0.85f)
-                            .wrapContentWidth(Alignment.Start),
-                            style = MaterialTheme.typography.h3)
+                        Text(
+                            text = title, modifier = Modifier
+                                .fillMaxWidth(0.85f)
+                                .wrapContentWidth(Alignment.Start),
+                            style = MaterialTheme.typography.h3
+                        )
 
-                        Text(text = recipe.rating.toString(),
-                            textAlign = TextAlign.Center,color = Color.White,
+                        Text(
+                            text = recipe.rating.toString(),
+                            textAlign = TextAlign.Center, color = Color.White,
                             modifier = Modifier
                                 .fillMaxSize()
                                 .background(
@@ -69,15 +79,17 @@ fun RecipeDetailView(recipe: Recipe) {
 
                         val dateUpdated = recipe.dateUpdated
 
-                        Text(text = if (!dateUpdated.isNullOrEmpty()) {
-                            "Updated $dateUpdated by $publisher"
-                        }else {
-                            "Updated by $publisher"
-                        },
+                        Text(
+                            text = if (!dateUpdated.isNullOrEmpty()) {
+                                "Updated $dateUpdated by $publisher"
+                            } else {
+                                "Updated by $publisher"
+                            },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(bottom = 8.dp),
-                            style = MaterialTheme.typography.caption)
+                                .padding(8.dp),
+                            style = MaterialTheme.typography.caption
+                        )
                     }
 
                     for (ingredient in recipe.ingredients) {
@@ -85,7 +97,7 @@ fun RecipeDetailView(recipe: Recipe) {
                             text = ingredient,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(bottom = 8.dp),
+                                .padding(start = 8.dp,bottom = 8.dp),
                             style = MaterialTheme.typography.body1
                         )
                     }
