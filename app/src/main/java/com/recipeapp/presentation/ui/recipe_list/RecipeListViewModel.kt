@@ -38,7 +38,7 @@ class RecipeListViewModel @Inject constructor(
     val errorState: MutableState<ErrorState> = mutableStateOf(ErrorState(false, null))
     val query = mutableStateOf("")
     val selectedFoodCategory: MutableState<FoodCategory?> = mutableStateOf(null)
-    var categoryScrollPosition = 0f
+    //var categoryScrollPosition = 0f
     var loading = mutableStateOf(false)
     val page = mutableStateOf(1)
     private var recipeListScrollPosition = 0
@@ -101,9 +101,9 @@ class RecipeListViewModel @Inject constructor(
         onTriggeredEvent(RecipeListEvent.SearchEvent)
     }
 
-    fun onChangeCategoryScrollPosition(position: Float) {
-        categoryScrollPosition = position
-    }
+//    fun onChangeCategoryScrollPosition(position: Float) {
+//        categoryScrollPosition = position
+//    }
 
     fun onChangeRecipeListScrollPosition(position: Int) {
         setListScrollPosition(position)
