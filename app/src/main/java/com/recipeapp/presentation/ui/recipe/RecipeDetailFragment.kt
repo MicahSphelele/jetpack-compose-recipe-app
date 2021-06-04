@@ -11,17 +11,18 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.recipeapp.domain.model.Recipe
 import com.recipeapp.presentation.BaseApp
 import com.recipeapp.presentation.components.CircularIndeterminateProgressBar
+import com.recipeapp.presentation.components.LoadingRecipeDetailShimmer
 import com.recipeapp.presentation.components.RecipeDetailView
 import com.recipeapp.presentation.components.RecipeDetailsTopBar
 import com.recipeapp.presentation.theme.AppTheme
 import com.recipeapp.util.AppConstants
-import com.recipeapp.util.AppLogger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -79,12 +80,15 @@ class RecipeDetailFragment : Fragment() {
             Box(modifier = Modifier.fillMaxSize()) {
 
                 if (loading && recipe == null) {
-                    AppLogger.info("Loading recipe details...")
+
+                    LoadingRecipeDetailShimmer(cardHeight = 250.dp)
+
                 } else {
                     recipe?.let {
                         RecipeDetailView(recipe = it)
                     }
                 }
+
                 CircularIndeterminateProgressBar(isDisplayed = loading, 0.3f)
             }
         }

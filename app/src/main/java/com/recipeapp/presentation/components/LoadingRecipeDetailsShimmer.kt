@@ -16,12 +16,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun LoadingRecipeListShimmer(
+fun LoadingRecipeDetailShimmer(
     cardHeight: Dp,
     padding: Dp = 16.dp
 ) {
-
-
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
         val cardWidthPx = with(LocalDensity.current) { (maxWidth - (padding*2)).toPx() }
         val cardHeightPx = with(LocalDensity.current) { (cardHeight - padding).toPx() }
@@ -62,14 +60,14 @@ fun LoadingRecipeListShimmer(
         )
 
         LazyColumn {
-            items(5){
-                ShimmerRecipeCardItem(
+            item {
+                ShimmerRecipeDetailsCard(
                     colors = colors,
+                    cardHeight = cardHeight ,
+                    padding = padding,
                     xShimmer = xCardShimmer.value,
                     yShimmer = yCardShimmer.value,
-                    cardHeight = cardHeight,
-                    gradientWidth = gradientWidth,
-                    padding = padding
+                    gradientWidth =  gradientWidth
                 )
             }
         }
@@ -77,8 +75,9 @@ fun LoadingRecipeListShimmer(
 }
 
 
+
 @Composable
-private fun ShimmerRecipeCardItem(
+private fun ShimmerRecipeDetailsCard(
     colors: List<Color>,
     cardHeight: Dp,
     padding: Dp,
@@ -100,6 +99,28 @@ private fun ShimmerRecipeCardItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .requiredHeight(cardHeight)
+                    .background(brush = brush)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Surface(shape = MaterialTheme.shapes.small) {
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .requiredHeight(cardHeight / 10)
+                    .background(brush = brush)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Surface(shape = MaterialTheme.shapes.small) {
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .requiredHeight(cardHeight / 10)
                     .background(brush = brush)
             )
         }
