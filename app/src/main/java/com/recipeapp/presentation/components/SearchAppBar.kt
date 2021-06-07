@@ -1,7 +1,10 @@
 package com.recipeapp.presentation.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -12,10 +15,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bedtime
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -24,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.recipeapp.domain.model.FoodCategory
 import com.recipeapp.domain.model.getAllFoodCategories
+import com.recipeapp.presentation.components.util.toast
 import com.recipeapp.presentation.ui.recipe_list.RecipeListEvent
 
 @ExperimentalComposeUiApi
@@ -38,6 +45,7 @@ fun SearchAppBar(
 ) {
 
     val keyboardController = LocalSoftwareKeyboardController.current
+    val dropDownMenuExpanded = remember { mutableStateOf(false) }
 
     Surface(
         modifier = Modifier
@@ -56,9 +64,9 @@ fun SearchAppBar(
                     onQueryChange(value)
                 },
                 modifier = Modifier
-                        .fillMaxWidth(0.9f)
-                        .padding(8.dp)
-                        .background(color = MaterialTheme.colors.surface),
+                    .fillMaxWidth(0.9f)
+                    .padding(8.dp)
+                    .background(color = MaterialTheme.colors.surface),
                 label = {Text(text = "Search")} ,
                 keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,
@@ -78,7 +86,9 @@ fun SearchAppBar(
                     modifier = Modifier.align(Alignment.CenterVertically)
                 ) {
                     val menu = createRef()
-                    IconButton(onClick = onToggleTheme,
+                    IconButton(onClick = {
+                        dropDownMenuExpanded.value = !dropDownMenuExpanded.value
+                    },
                         modifier = Modifier.constrainAs(menu) {
                             this.end.linkTo(this.parent.end)
                             this.top.linkTo(this.parent.top)
@@ -87,6 +97,8 @@ fun SearchAppBar(
                         Icon(imageVector = Icons.Filled.Bedtime,
                             contentDescription = "Night/Light Mode Icon")
                     }
+
+                    ContextMenu(expanded = dropDownMenuExpanded)
                 }
             }
 
@@ -114,6 +126,42 @@ fun SearchAppBar(
                 }
 
             }
+        }
+    }
+}
+
+@Composable
+fun ContextMenu(expanded: MutableState<Boolean>) {
+
+    val context = LocalContext.current
+
+    DropdownMenu(
+        expanded = expanded.value,
+        onDismissRequest = { expanded.value = false },
+    ) {
+        DropdownMenuItem(onClick = {
+            context.toast("Using Dark")
+            expanded.value = false
+        }) {
+            Text("Dark")
+        }
+
+        Divider()
+
+        DropdownMenuItem(onClick = {
+            context.toast("Using Light")
+            expanded.value = false
+        }) {
+            Text("Light")
+        }
+
+        Divider()
+
+        DropdownMenuItem(onClick = {
+            context.toast("Using System")
+            expanded.value = false
+        }) {
+            Text("System")
         }
     }
 }

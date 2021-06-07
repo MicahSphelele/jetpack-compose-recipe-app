@@ -54,6 +54,7 @@ class RecipeListFragment : Fragment() {
 
                     ViewRecipeList()
 
+
                     val errorState = viewModel.errorState.value
 
                     if (errorState.hasError) {
@@ -90,6 +91,7 @@ class RecipeListFragment : Fragment() {
                     onToggleTheme = {
                         application.toggleAppTheme()
                         lifecycleScope.launch {
+
                             val message = if(application.isDarkTheme.value) {
                                 "Changed app theme to dark"
                             } else {

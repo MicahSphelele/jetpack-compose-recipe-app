@@ -40,4 +40,14 @@ class BaseApp : Application(), DefaultLifecycleObserver {
         }
     }
 
+    fun toggleAppTheme(uiModeState :Boolean) {
+
+        isDarkTheme.value = uiModeState
+
+        lifecycleOwner.lifecycleScope.launch {
+            AppLogger.info("Saving theme mode is dark mode to : ${isDarkTheme.value}")
+            dataStoreManager.saveBoolean(AppConstants.IS_DARK_MODE, isDarkTheme.value)
+        }
+    }
+
 }
