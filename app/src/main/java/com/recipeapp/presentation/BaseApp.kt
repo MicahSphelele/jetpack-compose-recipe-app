@@ -6,6 +6,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import com.recipeapp.domain.model.enum.UiState
 import com.recipeapp.util.AppConstants
 import com.recipeapp.util.AppLogger
 import com.recipeapp.util.DataStoreManager
@@ -16,6 +17,8 @@ import kotlinx.coroutines.launch
 class BaseApp : Application(), DefaultLifecycleObserver {
 
     val isDarkTheme = mutableStateOf(false)
+    val uiModeState = mutableStateOf(UiState.LIGHT)
+
     private lateinit var lifecycleOwner: LifecycleOwner
     private lateinit var dataStoreManager: DataStoreManager
 
@@ -40,13 +43,26 @@ class BaseApp : Application(), DefaultLifecycleObserver {
         }
     }
 
-    fun toggleAppTheme(uiModeState :Boolean) {
+    fun toggleAppTheme(uiModeState :UiState, isSystemInDarkTheme: ()-> Boolean ) {
+        this.uiModeState.value = uiModeState
 
-        isDarkTheme.value = uiModeState
+        when(this.uiModeState.value) {
+            UiState.LIGHT -> {
+                isDarkTheme.value = false
+            }
+            UiState.DARK -> {
+                isDarkTheme.value = true
+            }
+            UiState.SYSTEM -> {
+                isDarkTheme.value = isSystemInDarkTheme()
+            }
+        }
 
         lifecycleOwner.lifecycleScope.launch {
             AppLogger.info("Saving theme mode is dark mode to : ${isDarkTheme.value}")
+            dataStoreManager.saveInteger(AppConstants.UI_MODE,uiModeState.ordinal)
             dataStoreManager.saveBoolean(AppConstants.IS_DARK_MODE, isDarkTheme.value)
+
         }
     }
 
