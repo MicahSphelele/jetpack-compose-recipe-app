@@ -1,4 +1,4 @@
-package com.recipeapp.domain.model.enum
+package com.recipeapp.domain.model.enums
 
 enum class UiState {
     LIGHT,DARK,SYSTEM
