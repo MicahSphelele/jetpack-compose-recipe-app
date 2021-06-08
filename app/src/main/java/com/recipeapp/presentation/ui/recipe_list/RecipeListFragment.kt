@@ -88,22 +88,7 @@ class RecipeListFragment : Fragment() {
                     onExecuteSearch = viewModel::onTriggeredEvent,
                     onSelectedCategoryChange = viewModel::onSelectedCategoryChange,
                     selectedCategory = selectedCategory,
-                    onToggleTheme = {
-                        application.toggleAppTheme()
-                        lifecycleScope.launch {
-
-                            val message = if(application.isDarkTheme.value) {
-                                "Changed app theme to dark"
-                            } else {
-                                "Changed app theme to light"
-                            }
-                            snackbarController.showSnackbar(
-                                scaffoldState = scaffoldState,
-                                message = message,
-                                actionLabel = "Dismiss"
-                            )
-                        }
-                    }
+                    onChangeUiMode = application::onChangeUiMode
                 )
             },
             scaffoldState = scaffoldState,
@@ -126,3 +111,20 @@ class RecipeListFragment : Fragment() {
         }
     }
 }
+/**
+ *                     onToggleTheme = {
+application.toggleAppTheme()
+lifecycleScope.launch {
+val message = if(application.isDarkTheme.value) {
+"Changed app theme to dark"
+} else {
+"Changed app theme to light"
+}
+snackbarController.showSnackbar(
+scaffoldState = scaffoldState,
+message = message,
+actionLabel = "Dismiss"
+)
+}
+}
+**/

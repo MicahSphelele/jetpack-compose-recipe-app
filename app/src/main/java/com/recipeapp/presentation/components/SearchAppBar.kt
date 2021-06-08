@@ -1,6 +1,7 @@
 package com.recipeapp.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,6 +30,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.recipeapp.domain.model.FoodCategory
+import com.recipeapp.domain.model.enums.UiState
 import com.recipeapp.domain.model.getAllFoodCategories
 import com.recipeapp.presentation.components.util.toast
 import com.recipeapp.presentation.ui.recipe_list.RecipeListEvent
@@ -41,7 +43,7 @@ fun SearchAppBar(
     onExecuteSearch: (RecipeListEvent) -> Unit,
     onSelectedCategoryChange: (String) -> Unit,
     selectedCategory: FoodCategory?,
-    onToggleTheme: () -> Unit
+    onChangeUiMode: (UiState, Boolean) -> Unit
 ) {
 
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -59,26 +61,30 @@ fun SearchAppBar(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                TextField(value = query,
+                TextField(
+                    value = query,
                     onValueChange = { value ->
-                    onQueryChange(value)
-                },
-                modifier = Modifier
-                    .fillMaxWidth(0.9f)
-                    .padding(8.dp)
-                    .background(color = MaterialTheme.colors.surface),
-                label = {Text(text = "Search")} ,
-                keyboardOptions = KeyboardOptions(
+                        onQueryChange(value)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth(0.9f)
+                        .padding(8.dp)
+                        .background(color = MaterialTheme.colors.surface),
+                    label = { Text(text = "Search") },
+                    keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Search
                     ),
-                keyboardActions = KeyboardActions(onDone = {
+                    keyboardActions = KeyboardActions(onDone = {
                         onExecuteSearch(RecipeListEvent.SearchEvent)
                         keyboardController?.hide()
                     }),
-                leadingIcon = {Icon(
-                        imageVector = Icons.Filled.Search,
-                        contentDescription = "Search Icon")},
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Search,
+                            contentDescription = "Search Icon"
+                        )
+                    },
                     textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
                 )
 
@@ -93,12 +99,17 @@ fun SearchAppBar(
                             this.end.linkTo(this.parent.end)
                             this.top.linkTo(this.parent.top)
                             this.bottom.linkTo(this.parent.bottom)
-                    }) {
-                        Icon(imageVector = Icons.Filled.Bedtime,
-                            contentDescription = "Night/Light Mode Icon")
+                        }) {
+                        Icon(
+                            imageVector = Icons.Filled.Bedtime,
+                            contentDescription = "Night/Light Mode Icon"
+                        )
                     }
 
-                    ContextMenu(expanded = dropDownMenuExpanded)
+                    ContextMenu(
+                        expanded = dropDownMenuExpanded,
+                        onChangeUiMode = onChangeUiMode
+                    )
                 }
             }
 
@@ -131,26 +142,22 @@ fun SearchAppBar(
 }
 
 @Composable
-fun ContextMenu(expanded: MutableState<Boolean>) {
+fun ContextMenu(
+    expanded: MutableState<Boolean>,
+    onChangeUiMode: (UiState, Boolean) -> Unit
+) {
 
     val context = LocalContext.current
+    val isSystemInDarkTheme = isSystemInDarkTheme()
 
     DropdownMenu(
         expanded = expanded.value,
         onDismissRequest = { expanded.value = false },
     ) {
         DropdownMenuItem(onClick = {
-            context.toast("Using Dark")
-            expanded.value = false
-        }) {
-            Text("Dark")
-        }
-
-        Divider()
-
-        DropdownMenuItem(onClick = {
             context.toast("Using Light")
             expanded.value = false
+            onChangeUiMode(UiState.LIGHT, isSystemInDarkTheme)
         }) {
             Text("Light")
         }
@@ -158,10 +165,21 @@ fun ContextMenu(expanded: MutableState<Boolean>) {
         Divider()
 
         DropdownMenuItem(onClick = {
+            context.toast("Using Dark")
+            expanded.value = false
+            onChangeUiMode(UiState.DARK, isSystemInDarkTheme)
+        }) {
+            Text("Dark")
+        }
+
+        Divider()
+
+        DropdownMenuItem(onClick = {
             context.toast("Using System")
             expanded.value = false
+            onChangeUiMode(UiState.SYSTEM, isSystemInDarkTheme)
         }) {
-            Text("System")
+            Text("System Default")
         }
     }
 }

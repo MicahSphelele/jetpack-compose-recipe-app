@@ -62,7 +62,7 @@ class BaseApp : Application(), DefaultLifecycleObserver {
 
         lifecycleOwner.lifecycleScope.launch {
             AppLogger.info("Saving theme mode is dark mode to : ${isDarkTheme.value}")
-            dataStoreManager.saveInteger(AppConstants.UI_MODE,uiModeState.ordinal)
+            //dataStoreManager.saveInteger(AppConstants.UI_MODE,uiModeState.ordinal)
             dataStoreManager.saveBoolean(AppConstants.IS_DARK_MODE, isDarkTheme.value)
 
         }
