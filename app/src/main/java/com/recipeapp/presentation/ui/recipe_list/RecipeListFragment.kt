@@ -13,17 +13,14 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.recipeapp.presentation.BaseApp
 import com.recipeapp.presentation.components.AppAlertDialog
 import com.recipeapp.presentation.components.RecipeList
 import com.recipeapp.presentation.components.SearchAppBar
-import com.recipeapp.presentation.components.util.SnackbarController
 import com.recipeapp.presentation.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ExperimentalComposeUiApi
@@ -35,7 +32,7 @@ class RecipeListFragment : Fragment() {
     @Inject
     lateinit var application: BaseApp
 
-    private val snackbarController = SnackbarController(lifecycleScope)
+    //private val snackbarController = SnackbarController(lifecycleScope)
 
     private val dialogState = mutableStateOf(true)
 
