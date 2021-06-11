@@ -7,9 +7,9 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
-def propFile = rootProject.file("./apikey.properties")
-def apikeyProperties = new Properties()
-apikeyProperties.load(new FileInputStream(propFile))
+def propFile = rootProject.file("./local.properties")
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(propFile))
 
 android {
     compileSdkVersion 30
@@ -21,7 +21,7 @@ android {
         versionCode 1
         versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "RECIPE_APP_API_TOKEN", apikeyProperties['RECIPE_APP_API_TOKEN'])
+        buildConfigField("String", "RECIPE_APP_API_TOKEN", localProperties['RECIPE_APP_API_TOKEN'])
     }
 
     buildTypes {
