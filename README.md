@@ -1,5 +1,5 @@
 # JetPack-Compose-RecipeApp
-A simple JetPack Compose app that gets recipes from an api
+A simple JetPack Compose app that gets recipes from the [**Food To Fork API**](https://kotlinlang.org/) inspired by [**Coding with Mitch**](https://www.youtube.com/results?search_query=coding+with+mitch)
 
 ## App Screen Shots (Light Mode)
 <div>
