@@ -43,7 +43,7 @@ fun SearchAppBar(
     onExecuteSearch: (RecipeListEvent) -> Unit,
     onSelectedCategoryChange: (String) -> Unit,
     selectedCategory: FoodCategory?,
-    onChangeUiMode: (UiState, Boolean) -> Unit
+    onChangeUiMode: (UiState) -> Unit
 ) {
 
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -144,7 +144,7 @@ fun SearchAppBar(
 @Composable
 fun ContextMenu(
     expanded: MutableState<Boolean>,
-    onChangeUiMode: (UiState, Boolean) -> Unit
+    onChangeUiMode: (UiState) -> Unit
 ) {
 
     val context = LocalContext.current
@@ -157,7 +157,7 @@ fun ContextMenu(
         DropdownMenuItem(onClick = {
             context.toast("Using Light")
             expanded.value = false
-            onChangeUiMode(UiState.LIGHT, isSystemInDarkTheme)
+            onChangeUiMode(UiState.LIGHT)
         }) {
             Text("Light")
         }
@@ -167,7 +167,7 @@ fun ContextMenu(
         DropdownMenuItem(onClick = {
             context.toast("Using Dark")
             expanded.value = false
-            onChangeUiMode(UiState.DARK, isSystemInDarkTheme)
+            onChangeUiMode(UiState.DARK)
         }) {
             Text("Dark")
         }
@@ -177,7 +177,7 @@ fun ContextMenu(
         DropdownMenuItem(onClick = {
             context.toast("Using System")
             expanded.value = false
-            onChangeUiMode(UiState.SYSTEM, isSystemInDarkTheme)
+            onChangeUiMode(UiState.SYSTEM)
         }) {
             Text("System Default")
         }

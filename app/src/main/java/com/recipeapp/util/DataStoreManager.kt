@@ -9,7 +9,7 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 
-class DataStoreManager( private val context: Context) {
+class DataStoreManager(context: Context) {
 
     private val Context.dataStore : DataStore<Preferences> by preferencesDataStore(name = "app_settings")
     private var appDataStore: DataStore<Preferences> = context.dataStore
@@ -41,7 +41,4 @@ class DataStoreManager( private val context: Context) {
 
         return preferences[dataStoreKey] ?: false
     }
-
-
-
 }

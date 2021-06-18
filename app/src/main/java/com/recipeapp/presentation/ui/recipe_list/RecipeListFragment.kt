@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
@@ -47,10 +48,9 @@ class RecipeListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
 
-                AppTheme(darkTheme = application.isDarkTheme.value) {
+                AppTheme(darkTheme = application.isUIStateInDarkMode(isSystemInDarkTheme = isSystemInDarkTheme())) {
 
                     ViewRecipeList()
-
 
                     val errorState = viewModel.errorState.value
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
@@ -54,7 +55,7 @@ class RecipeDetailFragment : Fragment() {
                 val loading = viewModel.loading.value
                 val recipe = viewModel.recipe.value
 
-                AppTheme(darkTheme = application.isDarkTheme.value) {
+                AppTheme(darkTheme = application.isUIStateInDarkMode(isSystemInDarkTheme())) {
                     ViewRecipeDetails(recipe = recipe, loading = loading)
                 }
             }

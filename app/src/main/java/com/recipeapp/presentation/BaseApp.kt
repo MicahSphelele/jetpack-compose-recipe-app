@@ -16,8 +16,7 @@ import kotlinx.coroutines.launch
 @HiltAndroidApp
 class BaseApp : Application(), DefaultLifecycleObserver {
 
-    val isDarkTheme = mutableStateOf(false)
-    val uiModeState = mutableStateOf(UiState.LIGHT.ordinal)
+    private val uiModeState = mutableStateOf(UiState.LIGHT.ordinal)
 
     private lateinit var lifecycleOwner: LifecycleOwner
     private lateinit var dataStoreManager: DataStoreManager
@@ -25,47 +24,38 @@ class BaseApp : Application(), DefaultLifecycleObserver {
     override fun onCreate() {
         super<Application>.onCreate()
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
-         lifecycleOwner = ProcessLifecycleOwner.get()
+        lifecycleOwner = ProcessLifecycleOwner.get()
 
         dataStoreManager = DataStoreManager(this.applicationContext)
 
         lifecycleOwner.lifecycleScope.launch {
-            isDarkTheme.value = dataStoreManager.getBoolean(AppConstants.IS_DARK_MODE)
+            //isDarkTheme.value = dataStoreManager.getBoolean(AppConstants.IS_DARK_MODE)
             uiModeState.value = dataStoreManager.getInteger(AppConstants.UI_MODE)
+            AppLogger.info("UI State = ${uiModeState.value}")
         }
     }
 
+    fun isUIStateInDarkMode(isSystemInDarkTheme: Boolean): Boolean {
+        return when (uiModeState.value) {
+            UiState.LIGHT.ordinal -> {
+                false
+            }
+            UiState.DARK.ordinal -> {
 
-    fun toggleAppTheme() {
-        isDarkTheme.value = !isDarkTheme.value
-        lifecycleOwner.lifecycleScope.launch {
-            AppLogger.info("Saving theme mode is dark mode to : ${isDarkTheme.value}")
-            dataStoreManager.saveBoolean(AppConstants.IS_DARK_MODE, isDarkTheme.value)
+                true
+
+            } else -> {
+                isSystemInDarkTheme
+            }
         }
     }
 
-    fun onChangeUiMode(uiModeState :UiState, isSystemInDarkTheme: Boolean ) {
+    fun onChangeUiMode(uiModeState: UiState) {
 
-        //this.uiModeState.value = uiModeState.ordinal
-
-        when(uiModeState) {
-            UiState.LIGHT -> {
-                isDarkTheme.value = false
-            }
-            UiState.DARK -> {
-                isDarkTheme.value = true
-            }
-            UiState.SYSTEM -> {
-                isDarkTheme.value = isSystemInDarkTheme
-            }
-        }
+        this.uiModeState.value = uiModeState.ordinal
 
         lifecycleOwner.lifecycleScope.launch {
-            AppLogger.info("Saving theme mode is dark mode to : ${isDarkTheme.value}")
-            //dataStoreManager.saveInteger(AppConstants.UI_MODE,uiModeState.ordinal)
-            dataStoreManager.saveBoolean(AppConstants.IS_DARK_MODE, isDarkTheme.value)
-
+            dataStoreManager.saveInteger(AppConstants.UI_MODE, uiModeState.ordinal)
         }
     }
-
 }

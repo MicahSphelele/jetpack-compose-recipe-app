@@ -110,7 +110,6 @@ class RecipeListViewModel @Inject constructor(
     }
 
     private suspend fun search() {
-        AppLogger.info("Start querying data : ${query.value}")
         loading.value = true
         resetSearchState()
         delay(1000)
