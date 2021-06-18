@@ -1,4 +1,9 @@
 # JetPack-Compose-RecipeApp
+
+<p align="center">
+  <img src="https://github.com/MicahSphelele/JetPack-Compose-RecipeApp/blob/develop/logo/recipe-book.png" width="100" height="100">
+</p>
+
 A simple JetPack Compose app that gets recipes from the [**Food To Fork API**](https://kotlinlang.org/) inspired by [**Coding with Mitch**](https://www.youtube.com/results?search_query=coding+with+mitch)
 
 ## App Screen Shots (Light Mode)
