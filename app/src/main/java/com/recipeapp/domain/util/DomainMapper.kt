@@ -1,8 +1,8 @@
 package com.recipeapp.domain.util
 
-interface DomainMapper<T,D> {
+interface DomainMapper<T, D> {
 
-    fun mapToDomainModel(entity: T) : D
+    fun mapToDomainModel(entity: T): D
 
-    fun mapFromDomainModel(domainModel: D) : T
+    fun mapFromDomainModel(domainModel: D): T
 }

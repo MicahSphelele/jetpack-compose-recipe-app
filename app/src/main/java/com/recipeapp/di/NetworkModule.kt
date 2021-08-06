@@ -16,20 +16,20 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun providesRecipeService() : RecipeService {
+    fun providesRecipeService(): RecipeService {
         return NetworkServiceBuilder.buildService(RecipeService::class.java)
     }
 
     @Singleton
     @Provides
-    fun providesRecipeMapper() : RecipeDtoMapper{
+    fun providesRecipeMapper(): RecipeDtoMapper {
         return RecipeDtoMapper()
     }
 
     @Singleton
     @Provides
     @Named(NetworkServiceBuilder.NAMED_TOKEN)
-    fun providesToken() : String{
+    fun providesToken(): String {
         return NetworkServiceBuilder.TOKEN
     }
 }
