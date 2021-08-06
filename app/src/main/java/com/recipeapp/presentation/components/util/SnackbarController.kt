@@ -21,7 +21,7 @@ class SnackbarController(private val scope: CoroutineScope) {
 
         if (snackbarJob == null) {
             snackbarJob = scope.launch {
-                scaffoldState.snackbarHostState.showSnackbar(message,actionLabel)
+                scaffoldState.snackbarHostState.showSnackbar(message, actionLabel)
                 cancelActiveJob()
             }
 
@@ -29,7 +29,7 @@ class SnackbarController(private val scope: CoroutineScope) {
         }
         cancelActiveJob()
         snackbarJob = scope.launch {
-            scaffoldState.snackbarHostState.showSnackbar(message,actionLabel)
+            scaffoldState.snackbarHostState.showSnackbar(message, actionLabel)
             cancelActiveJob()
         }
 
