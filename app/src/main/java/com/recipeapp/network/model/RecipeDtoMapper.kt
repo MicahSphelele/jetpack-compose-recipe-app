@@ -3,10 +3,11 @@ package com.recipeapp.network.model
 import com.recipeapp.domain.model.Recipe
 import com.recipeapp.domain.util.DomainMapper
 
-class RecipeDtoMapper : DomainMapper<RecipeDto,Recipe> {
+class RecipeDtoMapper : DomainMapper<RecipeDto, Recipe> {
 
     override fun mapToDomainModel(entity: RecipeDto): Recipe {
-        return Recipe(id = entity.pk,
+        return Recipe(
+            id = entity.pk,
             title = entity.title,
             publisher = entity.publisher,
             featuredImage = entity.featuredImage,
@@ -14,13 +15,15 @@ class RecipeDtoMapper : DomainMapper<RecipeDto,Recipe> {
             sourceUrl = entity.sourceUrl,
             description = entity.description,
             cookingInstructions = entity.cookingInstructions,
-            ingredients = entity.ingredients?: listOf(),
+            ingredients = entity.ingredients ?: listOf(),
             dateAdded = entity.dateAdded,
-            dateUpdated = entity.dateUpdated)
+            dateUpdated = entity.dateUpdated
+        )
     }
 
     override fun mapFromDomainModel(domainModel: Recipe): RecipeDto {
-        return RecipeDto(pk = domainModel.id,
+        return RecipeDto(
+            pk = domainModel.id,
             title = domainModel.title,
             publisher = domainModel.publisher,
             featuredImage = domainModel.featuredImage,
@@ -30,14 +33,15 @@ class RecipeDtoMapper : DomainMapper<RecipeDto,Recipe> {
             cookingInstructions = domainModel.cookingInstructions,
             ingredients = domainModel.ingredients,
             dateAdded = domainModel.dateAdded,
-            dateUpdated = domainModel.dateUpdated)
+            dateUpdated = domainModel.dateUpdated
+        )
     }
 
-    fun toDomainList(initial: List<RecipeDto>) : List<Recipe>{
+    fun toDomainList(initial: List<RecipeDto>): List<Recipe> {
         return initial.map { mapToDomainModel(it) }
     }
 
-    fun fromDomainList(initial: List<Recipe>) : List<RecipeDto>{
+    fun fromDomainList(initial: List<Recipe>): List<RecipeDto> {
         return initial.map { mapFromDomainModel(it) }
     }
 }
