@@ -55,7 +55,7 @@ dependencies {
     def app_compat_version = "1.4.0-alpha03"//1.2.0
     implementation "androidx.appcompat:appcompat:$app_compat_version"
 
-    def material = "1.2.1"
+    def material = "1.4.0"
     implementation "com.google.android.material:material:$material"
 
     def constraint_layout = "2.0.4"
