@@ -99,7 +99,7 @@ dependencies {
     // Skip this if you don't want to use integration libraries or configure Glide.
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
-    def data_store_version = "1.0.0-beta01"
+    def data_store_version = "1.0.0"
     implementation "androidx.datastore:datastore-preferences:$data_store_version"
     implementation "androidx.datastore:datastore-preferences-core:$data_store_version"
 
