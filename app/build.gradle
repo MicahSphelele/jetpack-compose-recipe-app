@@ -58,7 +58,7 @@ dependencies {
     def material = "1.4.0"
     implementation "com.google.android.material:material:$material"
 
-    def constraint_layout = "2.0.4"
+    def constraint_layout = "2.1.0"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout"
 
     def androidx_ui = "1.0.0-alpha07"
