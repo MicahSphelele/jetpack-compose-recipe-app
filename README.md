@@ -19,3 +19,4 @@ A simple JetPack Compose app that gets recipes from the [**Food To Fork API**](h
 <img src="https://github.com/MicahSphelele/JetPack-Compose-RecipeApp/blob/develop/screenshots/screen_shot_2_dark.jpg" width="125" height="250"/>
 <img src="https://github.com/MicahSphelele/JetPack-Compose-RecipeApp/blob/develop/screenshots/screen_shot_3_dark.jpg" width="125" height="250"/>
 </div>
+
