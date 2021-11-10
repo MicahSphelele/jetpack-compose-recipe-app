@@ -79,7 +79,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-    def compose_nav = "2.4.0-alpha08"
+    def compose_nav = "2.4.0-beta02"
     implementation "androidx.navigation:navigation-compose:$compose_nav"
 
     def retrofit_version = "2.9.0"
