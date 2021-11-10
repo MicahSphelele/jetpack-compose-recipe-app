@@ -30,7 +30,7 @@ class RecipeDetailViewModel @Inject constructor(
     }
 
     val recipe: MutableState<Recipe?> = mutableStateOf(null)
-    val loading = mutableStateOf(false)
+    val isLoading = mutableStateOf(false)
     val errorState: MutableState<ErrorState> = mutableStateOf(ErrorState(false, null))
 
     init {
@@ -56,16 +56,17 @@ class RecipeDetailViewModel @Inject constructor(
     }
 
     private suspend fun getRecipe(id: Int) {
-        loading.value = true
+        isLoading.value = true
         delay(1000)
         try {
             val recipe = repository.get(token = token, id)
             this.recipe.value = recipe
             savedStateHandle.set(STATE_KEY_RECIPE_ID, recipe.id)
-            loading.value = false
+            isLoading.value = false
         } catch (ex: Exception) {
             ex.printStackTrace()
             AppLogger.error("Something went wrong on the server : ${ex.message}")
+            isLoading.value = false
             errorState.value = ErrorState(true, ex.message)
         }
     }

@@ -19,15 +19,15 @@ fun AppAlertDialog(
     title: String,
     message: String,
     buttonText: String,
-    state: MutableState<Boolean>
+    isShowing: MutableState<Boolean>
 ) {
-    if (state.value) {
+    if (isShowing.value) {
         AlertDialog(
             onDismissRequest = {
 
             },
             title = {
-                Text(text = title,style = MaterialTheme.typography.h6)
+                Text(text = title, style = MaterialTheme.typography.h6)
             },
             text = {
                 Text(text = message)
@@ -40,7 +40,7 @@ fun AppAlertDialog(
                 ) {
                     Button(
                         onClick = {
-                            state.value = false
+                            isShowing.value = false
                             activity.finish()
                         }
                     ) {
