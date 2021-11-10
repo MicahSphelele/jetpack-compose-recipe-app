@@ -1,4 +1,4 @@
-package com.recipeapp.network.model
+package com.recipeapp.domain.model
 
 import com.google.gson.annotations.SerializedName
 

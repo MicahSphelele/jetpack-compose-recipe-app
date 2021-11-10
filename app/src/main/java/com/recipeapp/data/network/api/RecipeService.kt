@@ -1,7 +1,7 @@
-package com.recipeapp.network
+package com.recipeapp.data.network.api
 
-import com.recipeapp.network.model.RecipeDto
-import com.recipeapp.network.responses.RecipeSearchResponse
+import com.recipeapp.domain.model.RecipeDto
+import com.recipeapp.domain.model.RecipeSearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query

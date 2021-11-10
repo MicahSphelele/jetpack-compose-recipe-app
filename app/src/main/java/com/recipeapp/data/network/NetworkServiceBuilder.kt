@@ -1,4 +1,4 @@
-package com.recipeapp.network
+package com.recipeapp.data.network
 
 import com.google.gson.GsonBuilder
 import com.recipeapp.BuildConfig
