@@ -21,6 +21,7 @@ import com.recipeapp.presentation.components.RecipeList
 import com.recipeapp.presentation.components.SearchAppBar
 import com.recipeapp.presentation.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
@@ -50,7 +51,7 @@ class RecipeListFragment : Fragment() {
 
                 AppTheme(darkTheme = application.isUIStateInDarkMode(isSystemInDarkTheme = isSystemInDarkTheme())) {
 
-                    ViewRecipeList()
+                    ViewRecipeList(viewModel)
 
                     val errorState = viewModel.errorState.value
 
@@ -70,7 +71,7 @@ class RecipeListFragment : Fragment() {
 
     @ExperimentalMaterialApi
     @Composable
-    private fun ViewRecipeList() {
+    private fun ViewRecipeList(viewModel: RecipeListViewModel) {
         val recipes = viewModel.recipes.value
         val query = viewModel.query.value
         val selectedCategory = viewModel.selectedFoodCategory.value

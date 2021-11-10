@@ -17,9 +17,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.recipeapp.R
 import com.recipeapp.domain.model.Recipe
+import com.recipeapp.presentation.Screen
 import com.recipeapp.presentation.ui.recipe_list.RecipeListEvent
 import com.recipeapp.presentation.ui.recipe_list.RecipeListViewModel
 import com.recipeapp.util.AppConstants
+import com.recipeapp.util.AppLogger
 
 @ExperimentalMaterialApi
 @Composable
@@ -51,11 +53,9 @@ fun RecipeList(
                         onTriggeredEvent(RecipeListEvent.NextPageEvent)
                     }
                     RecipeCard(recipe = recipe, onClick = {
-                        val bundle = Bundle()
                         recipe.id?.let { recipeID ->
-                            bundle.putInt(AppConstants.KEY_RECIPE_ID, recipeID)
-                            bundle.putParcelable(AppConstants.KEY_RECIPE, recipe)
-                            navController.navigate(R.id.recipeDetailsFragment, bundle)
+                            AppLogger.info("recipeId: $recipeID")
+                            navController.navigate("${Screen.RecipeDetailsScreen.route}/${recipeID}")
                         }
                     })
                 }

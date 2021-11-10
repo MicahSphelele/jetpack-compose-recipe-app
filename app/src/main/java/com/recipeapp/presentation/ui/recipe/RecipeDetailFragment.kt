@@ -72,9 +72,9 @@ class RecipeDetailFragment : Fragment() {
         Scaffold(
             scaffoldState = scaffoldState,
             topBar = {
-               RecipeDetailsTopBar(title = "Recipe Detail",onBackArrowClick = {
-                   findNavController().navigateUp()
-               })
+                RecipeDetailsTopBar(title = "Recipe Detail", onBackArrowClick = {
+                    findNavController().navigateUp()
+                })
             },
             snackbarHost = { scaffoldState.snackbarHostState }
         ) {
