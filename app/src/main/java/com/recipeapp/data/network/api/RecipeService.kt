@@ -1,4 +1,4 @@
-package com.recipeapp.network
+package com.recipeapp.data.network.api
 
 import com.recipeapp.domain.model.RecipeDto
 import com.recipeapp.domain.model.RecipeSearchResponse

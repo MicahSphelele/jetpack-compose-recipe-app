@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.recipeapp.domain.model.ErrorState
 import com.recipeapp.domain.model.Recipe
-import com.recipeapp.network.NetworkServiceBuilder
+import com.recipeapp.data.network.NetworkServiceBuilder
 import com.recipeapp.presentation.ui.recipe.RecipeEvent.GetDetailedRecipeEvent
 import com.recipeapp.domain.repository.RecipeRepository
 import com.recipeapp.util.AppLogger

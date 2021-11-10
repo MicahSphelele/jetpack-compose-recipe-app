@@ -1,9 +1,9 @@
 package com.recipeapp.di
 
-import com.recipeapp.network.RecipeService
-import com.recipeapp.domain.util.RecipeDtoMapper
+import com.recipeapp.data.network.api.RecipeService
+import com.recipeapp.data.repository.RecipeRepositoryImpl
 import com.recipeapp.domain.repository.RecipeRepository
-import com.recipeapp.network.repository.RecipeRepositoryImpl
+import com.recipeapp.domain.util.RecipeDtoMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

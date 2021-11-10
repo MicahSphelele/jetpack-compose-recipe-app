@@ -1,8 +1,8 @@
-package com.recipeapp.network.repository
+package com.recipeapp.data.repository
 
 import com.recipeapp.domain.model.Recipe
 import com.recipeapp.domain.repository.RecipeRepository
-import com.recipeapp.network.RecipeService
+import com.recipeapp.data.network.api.RecipeService
 import com.recipeapp.domain.util.RecipeDtoMapper
 
 class RecipeRepositoryImpl(private val recipeService: RecipeService, private val mapper: RecipeDtoMapper) :
