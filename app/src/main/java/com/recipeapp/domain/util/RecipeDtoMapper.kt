@@ -1,7 +1,7 @@
-package com.recipeapp.network.model
+package com.recipeapp.domain.util
 
 import com.recipeapp.domain.model.Recipe
-import com.recipeapp.domain.util.DomainMapper
+import com.recipeapp.domain.model.RecipeDto
 
 class RecipeDtoMapper : DomainMapper<RecipeDto, Recipe> {
 

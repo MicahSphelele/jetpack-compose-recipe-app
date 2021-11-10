@@ -1,4 +1,4 @@
-package com.recipeapp.repository
+package com.recipeapp.domain.repository
 
 import com.recipeapp.domain.model.Recipe
 

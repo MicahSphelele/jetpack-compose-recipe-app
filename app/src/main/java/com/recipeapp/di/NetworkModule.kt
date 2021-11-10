@@ -2,7 +2,7 @@ package com.recipeapp.di
 
 import com.recipeapp.network.NetworkServiceBuilder
 import com.recipeapp.network.RecipeService
-import com.recipeapp.network.model.RecipeDtoMapper
+import com.recipeapp.domain.util.RecipeDtoMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
