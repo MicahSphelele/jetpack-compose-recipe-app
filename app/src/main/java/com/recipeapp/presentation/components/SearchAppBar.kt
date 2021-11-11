@@ -1,7 +1,6 @@
 package com.recipeapp.presentation.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,9 +28,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.recipeapp.domain.model.FoodCategory
+import com.recipeapp.domain.model.enums.FoodCategory
 import com.recipeapp.domain.model.enums.UiState
-import com.recipeapp.domain.model.getAllFoodCategories
+import com.recipeapp.domain.model.enums.getAllFoodCategories
 import com.recipeapp.presentation.components.util.toast
 import com.recipeapp.presentation.ui.recipe_list.RecipeListEvent
 
@@ -148,7 +147,7 @@ fun ContextMenu(
 ) {
 
     val context = LocalContext.current
-    val isSystemInDarkTheme = isSystemInDarkTheme()
+    //val isSystemInDarkTheme = isSystemInDarkTheme()
 
     DropdownMenu(
         expanded = expanded.value,

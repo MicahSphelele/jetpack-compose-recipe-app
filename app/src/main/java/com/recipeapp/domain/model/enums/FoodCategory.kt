@@ -1,4 +1,4 @@
-package com.recipeapp.domain.model
+package com.recipeapp.domain.model.enums
 
 enum class FoodCategory(val value: String) {
     CHICKEN("Chicken"),

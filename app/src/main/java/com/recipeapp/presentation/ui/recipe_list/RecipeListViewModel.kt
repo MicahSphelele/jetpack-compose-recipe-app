@@ -5,11 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.recipeapp.domain.model.ErrorState
-import com.recipeapp.domain.model.FoodCategory
-import com.recipeapp.domain.model.Recipe
-import com.recipeapp.domain.model.getFoodCategory
 import com.recipeapp.data.network.NetworkServiceBuilder
+import com.recipeapp.domain.model.ErrorState
+import com.recipeapp.domain.model.Recipe
+import com.recipeapp.domain.model.enums.FoodCategory
+import com.recipeapp.domain.model.enums.getFoodCategory
 import com.recipeapp.domain.repository.RecipeRepository
 import com.recipeapp.util.AppLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
