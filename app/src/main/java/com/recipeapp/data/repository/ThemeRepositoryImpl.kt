@@ -9,35 +9,39 @@ import com.recipeapp.util.DataStoreManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class ThemeRepositoryImpl(private val context: Context, private val scope: CoroutineScope) :
+class ThemeRepositoryImpl(context: Context, private val scope: CoroutineScope) :
     ThemeRepository {
 
     private var dataStoreManager: DataStoreManager = DataStoreManager(context)
 
-    private val uiModeState = mutableStateOf(UiState.LIGHT.ordinal)
+    private val uiState = mutableStateOf(UiState.LIGHT.ordinal)
 
-    init {
+    override fun isUIStateInDarkMode(
+        scope: CoroutineScope,
+        isSystemInDarkTheme: Boolean,
+        onChangeTheme: (Boolean) -> Unit
+    ) {
+
         scope.launch {
-            dataStoreManager.getInteger(AppConstants.UI_MODE).also { uiModeState.value = it }
+            uiState.value = dataStoreManager.getInteger(AppConstants.UI_MODE)
         }
-    }
 
-    override fun isUIStateInDarkMode(isSystemInDarkTheme: Boolean): Boolean {
-        return when (uiModeState.value) {
+         when (uiState.value) {
             UiState.LIGHT.ordinal -> {
-                false
+                onChangeTheme(false)
             }
             UiState.DARK.ordinal -> {
-                true
+                onChangeTheme(true)
+
             }
             else -> {
-                isSystemInDarkTheme
+                onChangeTheme(isSystemInDarkTheme)
             }
         }
     }
 
     override fun changeUiMode(uiModeState: UiState) {
-        this.uiModeState.value = uiModeState.ordinal
+        this.uiState.value = uiModeState.ordinal
         scope.launch {
             dataStoreManager.saveInteger(AppConstants.UI_MODE, uiModeState.ordinal)
         }

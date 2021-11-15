@@ -8,8 +8,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.recipeapp.presentation.BaseApp
-import com.recipeapp.presentation.Screen
+import com.recipeapp.domain.model.enums.UiState
+import com.recipeapp.domain.model.screengraph.Screen
 import com.recipeapp.presentation.ui.recipe.RecipeDetailsScreen
 import com.recipeapp.presentation.ui.recipe_list.RecipeListScreen
 
@@ -18,7 +18,7 @@ import com.recipeapp.presentation.ui.recipe_list.RecipeListScreen
 @Composable
 fun RecipeAppNavGraph(
     navController: NavHostController,
-    application: BaseApp
+    onChangeTheme: (UiState) -> Unit
 ) {
 
     NavHost(
@@ -27,8 +27,8 @@ fun RecipeAppNavGraph(
     ) {
         composable(route = Screen.RecipeListScreen.route) {
             RecipeListScreen(
-                application = application,
-                navController = navController
+                navController = navController,
+                onChangeTheme = onChangeTheme
             )
         }
 

@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.recipeapp.domain.model.enums.UiState
 import com.recipeapp.presentation.BaseApp
 import com.recipeapp.presentation.components.AppAlertDialog
 import com.recipeapp.presentation.components.RecipeList
@@ -21,8 +22,8 @@ import com.recipeapp.presentation.components.SearchAppBar
 @ExperimentalMaterialApi
 @Composable
 fun RecipeListScreen(
-    application: BaseApp,
-    navController: NavController
+    navController: NavController,
+    onChangeTheme: (UiState) -> Unit
 ) {
     val viewModel = hiltViewModel<RecipeListViewModel>()
     val recipes = viewModel.recipes.value
@@ -43,7 +44,7 @@ fun RecipeListScreen(
                     onExecuteSearch = viewModel::onTriggeredEvent,
                     onSelectedCategoryChange = viewModel::onSelectedCategoryChange,
                     selectedCategory = selectedCategory,
-                    onChangeUiMode = application::onChangeUiMode
+                    onChangeUiMode = onChangeTheme
                 )
             },
             scaffoldState = scaffoldState,

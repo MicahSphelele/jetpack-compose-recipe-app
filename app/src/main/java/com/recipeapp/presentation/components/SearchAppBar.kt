@@ -21,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -31,7 +30,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.recipeapp.domain.model.enums.FoodCategory
 import com.recipeapp.domain.model.enums.UiState
 import com.recipeapp.domain.model.enums.getAllFoodCategories
-import com.recipeapp.presentation.components.util.toast
 import com.recipeapp.presentation.ui.recipe_list.RecipeListEvent
 
 @ExperimentalComposeUiApi
@@ -146,7 +144,7 @@ fun ContextMenu(
     onChangeUiMode: (UiState) -> Unit
 ) {
 
-    val context = LocalContext.current
+   // val context = LocalContext.current
     //val isSystemInDarkTheme = isSystemInDarkTheme()
 
     DropdownMenu(
@@ -154,7 +152,7 @@ fun ContextMenu(
         onDismissRequest = { expanded.value = false },
     ) {
         DropdownMenuItem(onClick = {
-            context.toast("Using Light")
+
             expanded.value = false
             onChangeUiMode(UiState.LIGHT)
         }) {
@@ -164,7 +162,6 @@ fun ContextMenu(
         Divider()
 
         DropdownMenuItem(onClick = {
-            context.toast("Using Dark")
             expanded.value = false
             onChangeUiMode(UiState.DARK)
         }) {
@@ -174,7 +171,6 @@ fun ContextMenu(
         Divider()
 
         DropdownMenuItem(onClick = {
-            context.toast("Using System")
             expanded.value = false
             onChangeUiMode(UiState.SYSTEM)
         }) {

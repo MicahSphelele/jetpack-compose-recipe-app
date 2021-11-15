@@ -1,6 +1,5 @@
 package com.recipeapp.presentation.components
 
-import android.os.Bundle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,12 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.recipeapp.R
 import com.recipeapp.domain.model.Recipe
-import com.recipeapp.presentation.Screen
+import com.recipeapp.domain.model.screengraph.Screen
 import com.recipeapp.presentation.ui.recipe_list.RecipeListEvent
 import com.recipeapp.presentation.ui.recipe_list.RecipeListViewModel
-import com.recipeapp.util.AppConstants
 import com.recipeapp.util.AppLogger
 
 @ExperimentalMaterialApi
