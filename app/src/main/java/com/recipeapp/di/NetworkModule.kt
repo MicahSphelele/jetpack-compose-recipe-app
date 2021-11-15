@@ -21,9 +21,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun providesRecipeMapper(): RecipeDtoMapper {
-        return RecipeDtoMapper()
-    }
+    fun providesRecipeMapper(): RecipeDtoMapper = RecipeDtoMapper()
 
     @Singleton
     @Provides
