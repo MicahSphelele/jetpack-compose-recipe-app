@@ -17,8 +17,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesApplication(@ApplicationContext app: Context) : BaseApp {
-        return app as BaseApp
-    }
+    fun providesApplication(@ApplicationContext context: Context): BaseApp =
+        (context as BaseApp)
 
 }
