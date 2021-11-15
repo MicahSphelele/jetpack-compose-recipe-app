@@ -30,7 +30,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.recipeapp.domain.model.enums.FoodCategory
 import com.recipeapp.domain.model.enums.UiState
 import com.recipeapp.domain.model.enums.getAllFoodCategories
-import com.recipeapp.presentation.ui.recipe_list.RecipeListEvent
+import com.recipeapp.domain.model.events.RecipeListEvent
 
 @ExperimentalComposeUiApi
 @Composable
