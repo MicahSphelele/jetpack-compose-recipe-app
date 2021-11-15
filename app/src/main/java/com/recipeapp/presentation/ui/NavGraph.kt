@@ -12,6 +12,7 @@ import com.recipeapp.presentation.BaseApp
 import com.recipeapp.presentation.Screen
 import com.recipeapp.presentation.ui.recipe.RecipeDetailViewModel
 import com.recipeapp.presentation.ui.recipe.RecipeDetailsScreen
+import com.recipeapp.presentation.ui.recipe_list.RecipeListScreen
 import com.recipeapp.presentation.ui.recipe_list.RecipeListViewModel
 
 @ExperimentalMaterialApi
@@ -20,7 +21,6 @@ import com.recipeapp.presentation.ui.recipe_list.RecipeListViewModel
 fun RecipeAppNavGraph(
     navController: NavHostController,
     application: BaseApp,
-    recipeListViewModel: RecipeListViewModel,
     recipeDetailsViewModel: RecipeDetailViewModel
 ) {
 
@@ -30,7 +30,6 @@ fun RecipeAppNavGraph(
     ) {
         composable(route = Screen.RecipeListScreen.route) {
             RecipeListScreen(
-                viewModel = recipeListViewModel,
                 application = application,
                 navController = navController
             )

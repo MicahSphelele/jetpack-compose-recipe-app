@@ -18,7 +18,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val viewModelRecipeList by viewModels<RecipeListViewModel>()
     private val viewModelRecipeDetails by viewModels<RecipeDetailViewModel>()
 
     @Inject
@@ -37,7 +36,6 @@ class MainActivity : AppCompatActivity() {
                 RecipeAppNavGraph(
                     navController = navController,
                     application = application,
-                    recipeListViewModel = viewModelRecipeList,
                     recipeDetailsViewModel = viewModelRecipeDetails
                 )
 

@@ -1,4 +1,4 @@
-package com.recipeapp.presentation.ui
+package com.recipeapp.presentation.ui.recipe_list
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.ExperimentalMaterialApi
@@ -9,21 +9,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.recipeapp.presentation.BaseApp
 import com.recipeapp.presentation.components.AppAlertDialog
 import com.recipeapp.presentation.components.RecipeList
 import com.recipeapp.presentation.components.SearchAppBar
-import com.recipeapp.presentation.ui.recipe_list.RecipeListViewModel
 
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @Composable
 fun RecipeListScreen(
-    viewModel: RecipeListViewModel,
     application: BaseApp,
     navController: NavController
 ) {
+    val viewModel = hiltViewModel<RecipeListViewModel>()
     val recipes = viewModel.recipes.value
     val query = viewModel.query.value
     val selectedCategory = viewModel.selectedFoodCategory.value
