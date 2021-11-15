@@ -16,7 +16,7 @@ class GetRecipeDetailsUseCase @Inject constructor(private val repository: Recipe
         recipeId: Int
     ): MutableState<Recipe> {
 
-        val mutableState = mutableStateOf<Recipe>(Recipe())
+        val mutableState = mutableStateOf(Recipe())
 
         coroutineScope.launch {
             mutableState.value = repository.get(token = token, id = recipeId)
