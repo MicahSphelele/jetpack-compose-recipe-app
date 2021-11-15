@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavController
@@ -20,11 +21,10 @@ import com.recipeapp.presentation.components.*
 
 @Composable
 fun RecipeDetailsScreen(
-    viewModel: RecipeDetailViewModel,
     navController: NavController,
     recipeId: Int
 ) {
-
+    val viewModel = hiltViewModel<RecipeDetailViewModel>()
     val scaffoldState = rememberScaffoldState()
     val isLoading = viewModel.isLoading.value
     val recipe = viewModel.recipe.value
