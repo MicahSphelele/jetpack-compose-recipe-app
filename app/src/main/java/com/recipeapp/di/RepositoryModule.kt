@@ -19,7 +19,5 @@ object RepositoryModule {
     fun providesRecipeRepository(
         recipeService: RecipeService,
         mapper: RecipeDtoMapper
-    ): RecipeRepository {
-        return RecipeRepositoryImpl(recipeService, mapper)
-    }
+    ): RecipeRepository = RecipeRepositoryImpl(recipeService, mapper)
 }
