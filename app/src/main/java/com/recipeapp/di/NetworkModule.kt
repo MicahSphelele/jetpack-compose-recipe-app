@@ -16,9 +16,8 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun providesRecipeService(): RecipeService {
-        return NetworkServiceBuilder.buildService(RecipeService::class.java)
-    }
+    fun providesRecipeService(): RecipeService =
+        NetworkServiceBuilder.buildService(RecipeService::class.java)
 
     @Singleton
     @Provides
