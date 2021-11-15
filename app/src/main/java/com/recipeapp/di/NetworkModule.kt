@@ -26,7 +26,5 @@ object NetworkModule {
     @Singleton
     @Provides
     @Named(NetworkServiceBuilder.NAMED_TOKEN)
-    fun providesToken(): String {
-        return NetworkServiceBuilder.TOKEN
-    }
+    fun providesToken(): String = NetworkServiceBuilder.TOKEN
 }
