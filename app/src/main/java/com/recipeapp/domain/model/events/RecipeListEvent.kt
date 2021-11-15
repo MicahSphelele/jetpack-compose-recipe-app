@@ -1,4 +1,4 @@
-package com.recipeapp.presentation.ui.recipe_list
+package com.recipeapp.domain.model.events
 
 sealed class RecipeListEvent {
     object SearchEvent: RecipeListEvent()

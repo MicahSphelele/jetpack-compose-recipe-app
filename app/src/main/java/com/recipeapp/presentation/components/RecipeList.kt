@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.recipeapp.domain.model.Recipe
 import com.recipeapp.domain.model.screengraph.Screen
-import com.recipeapp.presentation.ui.recipe_list.RecipeListEvent
+import com.recipeapp.domain.model.events.RecipeListEvent
 import com.recipeapp.presentation.ui.recipe_list.RecipeListViewModel
 import com.recipeapp.util.AppLogger
 

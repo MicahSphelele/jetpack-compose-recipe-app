@@ -10,6 +10,7 @@ import com.recipeapp.domain.model.ErrorState
 import com.recipeapp.domain.model.Recipe
 import com.recipeapp.domain.model.enums.FoodCategory
 import com.recipeapp.domain.model.enums.getFoodCategory
+import com.recipeapp.domain.model.events.RecipeListEvent
 import com.recipeapp.domain.repository.RecipeRepository
 import com.recipeapp.util.AppLogger
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,4 +1,4 @@
-package com.recipeapp.presentation.ui.recipe
+package com.recipeapp.domain.model.events
 
 sealed class RecipeEvent {
 

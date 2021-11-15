@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavController
+import com.recipeapp.domain.model.events.RecipeEvent
 import com.recipeapp.presentation.components.*
 
 @Composable
