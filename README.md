@@ -21,4 +21,3 @@ A simple JetPack Compose app that gets recipes from the [**Food To Fork API**](h
 </div>
 
 
-
