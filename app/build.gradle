@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.kotlin.symbol.processor)
 }
 
-def propFile = rootProject.file("./local.properties")
+def propFile = rootProject.file("./app.properties")
 def localProperties = new Properties()
 localProperties.load(new FileInputStream(propFile))
 
@@ -80,16 +80,13 @@ dependencies {
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
-    kapt(libs.hilt.compiler)
-    kapt(libs.hilt.androidx.compiler)
+    ksp(libs.hilt.compiler)
+    ksp(libs.hilt.androidx.compiler)
 
     implementation(libs.glide)
     // Skip this if you don't want to use integration libraries or configure Glide.
-    kapt(libs.glide.compiler)
+    ksp(libs.glide.compiler)
 
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.datastore.preferences.core)
-
-    //implementation("androidx.lifecycle:lifecycle-process:2.4.0")
-    //implementation("androidx.lifecycle:lifecycle-common-java8:2.4.0")
 }
