@@ -1,8 +1,6 @@
 package com.recipeapp.presentation.ui.recipe
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -10,26 +8,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import androidx.navigation.NavController
-import com.recipeapp.domain.model.events.RecipeEvent
-import com.recipeapp.presentation.components.*
+import com.recipeapp.presentation.components.AppAlertDialog
+import com.recipeapp.presentation.components.CircularIndeterminateProgressBar
+import com.recipeapp.presentation.components.LoadingRecipeDetailShimmer
+import com.recipeapp.presentation.components.RecipeDetailView
+import com.recipeapp.presentation.components.RecipeDetailsTopBar
+import com.recipeapp.presentation.ui.recipe.event.RecipeDetailEvent
+import com.recipeapp.presentation.ui.recipe.state.RecipeDetailUIState
 
 @Composable
 fun RecipeDetailsScreen(
-    navController: NavController,
-    recipeId: Int
+    uiState: RecipeDetailUIState = RecipeDetailUIState(),
+    onEvent:(RecipeDetailEvent) -> Unit,
 ) {
-    val viewModel = hiltViewModel<RecipeDetailViewModel>()
-    val isLoading = viewModel.isLoading.value
-    val recipe = viewModel.recipe.value
-    val errorState = viewModel.errorState.value
     val isDialogShowing = remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -39,7 +35,8 @@ fun RecipeDetailsScreen(
 
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_START) {
-                viewModel.onTriggeredEvent(RecipeEvent.GetDetailedRecipeEvent(recipeId))
+                onEvent(RecipeDetailEvent.OnStart)
+                //viewModel.onTriggeredEvent(RecipeEvent.GetDetailedRecipeEvent(recipeId))
             }
         }
 
@@ -50,19 +47,18 @@ fun RecipeDetailsScreen(
         }
     })
 
-    if (!errorState.hasError) {
+    if (!uiState.errorState.hasError) {
         Scaffold(
             topBar = {
-                RecipeDetailsTopBar(title = "Recipe Detail", onBackArrowClick = {
-                    navController.navigateUp()
-                    viewModel.isLoading.value = false
-                    viewModel.recipe.value = null
+                RecipeDetailsTopBar(title = "Recipe Detail",
+                    onBackArrowClick = {
+                        onEvent(RecipeDetailEvent.OnBackPressed)
                 })
             },
             snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
         ) { contentPadding ->
 
-            if (isLoading && recipe == null) {
+            if (uiState.isLoading && uiState.recipe == null) {
 
                 LoadingRecipeDetailShimmer(
                     contentPadding = contentPadding,
@@ -72,7 +68,7 @@ fun RecipeDetailsScreen(
                 CircularIndeterminateProgressBar(isDisplayed = true, verticalBias = 0.3f)
 
             } else {
-                recipe?.let {
+                uiState.recipe?.let {
                     RecipeDetailView(contentPadding = contentPadding, recipe = it)
                 }
             }
@@ -83,7 +79,7 @@ fun RecipeDetailsScreen(
     AppAlertDialog(
         activity = (LocalContext.current as AppCompatActivity),
         title = "Network Error",
-        message = "Something went wrong : ${errorState.errorMessage}",
+        message = "Something went wrong : ${uiState.errorState.errorMessage}",
         buttonText = "Ok",
         isShowing = isDialogShowing
     )

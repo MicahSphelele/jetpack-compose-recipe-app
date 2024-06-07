@@ -1,7 +1,5 @@
 package com.recipeapp.presentation.ui.recipe
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,9 +9,12 @@ import com.recipeapp.data.network.NetworkServiceBuilder
 import com.recipeapp.domain.model.events.RecipeEvent
 import com.recipeapp.domain.model.events.RecipeEvent.GetDetailedRecipeEvent
 import com.recipeapp.domain.repository.RecipeRepository
+import com.recipeapp.presentation.ui.recipe.state.RecipeDetailUIState
 import com.recipeapp.util.AppLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
@@ -30,9 +31,8 @@ class RecipeDetailViewModel @Inject constructor(
         const val STATE_KEY_RECIPE_ID = "recipe.state.recipe.id"
     }
 
-    val recipe: MutableState<Recipe?> = mutableStateOf(null)
-    val isLoading = mutableStateOf(false)
-    val errorState: MutableState<ErrorState> = mutableStateOf(ErrorState(false, null))
+    private val _uiState = MutableStateFlow(RecipeDetailUIState())
+    val uiState = _uiState.asStateFlow()
 
     init {
         //Restore if the process dies
@@ -57,19 +57,31 @@ class RecipeDetailViewModel @Inject constructor(
     }
 
     private suspend fun getRecipe(id: Int) {
-        isLoading.value = true
+
+        updateLoadingState()
+
         delay(1000)
+
         try {
             val recipe = repository.get(token = token, id)
-            this.recipe.value = recipe
+            updateRecipe(recipe = recipe)
             savedStateHandle[STATE_KEY_RECIPE_ID] = recipe.id
-            isLoading.value = false
         } catch (ex: Exception) {
             ex.printStackTrace()
             AppLogger.error("Something went wrong on the server : ${ex.message}")
-            isLoading.value = false
-            errorState.value = ErrorState(true, ex.message)
+            updateErrorState(ErrorState(true, ex.message))
         }
     }
 
+    private fun updateLoadingState() {
+        _uiState.value = uiState.value.copy(isLoading = true)
+    }
+
+    private fun updateRecipe(recipe: Recipe) {
+        _uiState.value = uiState.value.copy(recipe = recipe, isLoading = false)
+    }
+
+    private fun updateErrorState(errorState: ErrorState) {
+        _uiState.value = uiState.value.copy(errorState = errorState, isLoading = false)
+    }
 }
