@@ -11,15 +11,12 @@ import androidx.navigation.compose.rememberNavController
 import com.recipeapp.presentation.theme.AppTheme
 import com.recipeapp.presentation.ui.RecipeAppNavGraph
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var application: BaseApp
 
-    val viewModel by viewModels<MainViewModel>()
+    private val viewModel by viewModels<MainViewModel>()
 
     @ExperimentalComposeUiApi
     @ExperimentalMaterialApi

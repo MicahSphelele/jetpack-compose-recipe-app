@@ -16,8 +16,8 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.recipeapp.R
 import com.recipeapp.domain.model.Recipe
-import com.recipeapp.util.DEFAULT_RECIPE_IMAGE
 import com.recipeapp.util.loadPicture
 
 @Composable
@@ -35,7 +35,7 @@ fun RecipeCard(recipe: Recipe,onClick:() -> Unit){
 
             recipe.featuredImage?.let { url ->
 
-                val image = loadPicture(url = url, default = DEFAULT_RECIPE_IMAGE).value
+                val image = loadPicture(url = url, default = R.drawable.empty_plate).value
 
                 image?.let {
 

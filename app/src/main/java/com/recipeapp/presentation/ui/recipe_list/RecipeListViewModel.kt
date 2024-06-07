@@ -1,6 +1,7 @@
 package com.recipeapp.presentation.ui.recipe_list
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -41,7 +42,7 @@ class RecipeListViewModel @Inject constructor(
     val selectedFoodCategory: MutableState<FoodCategory?> = mutableStateOf(null)
     //var categoryScrollPosition = 0f
     var loading = mutableStateOf(false)
-    val page = mutableStateOf(1)
+    val page = mutableIntStateOf(1)
     private var recipeListScrollPosition = 0
 
     init {
@@ -116,7 +117,7 @@ class RecipeListViewModel @Inject constructor(
         delay(1000)
 
         try {
-            recipes.value = repository.search(token, page.value, query.value)
+            recipes.value = repository.search(token, page.intValue, query.value)
             loading.value = false
         } catch (ex: Exception) {
             ex.printStackTrace()
@@ -127,13 +128,13 @@ class RecipeListViewModel @Inject constructor(
 
     private suspend fun nextPage() {
         //Prevent duplicate events due to recompose happening too quickly
-        if ((recipeListScrollPosition + 1) >= (page.value * PAGE_SIZE)) {
+        if ((recipeListScrollPosition + 1) >= (page.intValue * PAGE_SIZE)) {
             loading.value = true
             incrementPage()
-            AppLogger.info("Next Page triggered : ${page.value}")
+            AppLogger.info("Next Page triggered : ${page.intValue}")
             delay(1000)
-            if (page.value > 1) {
-                val results = repository.search(token, page.value, query.value)
+            if (page.intValue > 1) {
+                val results = repository.search(token, page.intValue, query.value)
                 AppLogger.info("Results : $results")
                 appendRecipes(results)
             }
@@ -147,14 +148,14 @@ class RecipeListViewModel @Inject constructor(
         val results: MutableList<Recipe> = mutableListOf()
         errorState.value = ErrorState(false, null)
 
-        for (p in 1..page.value) {
+        for (p in 1..page.intValue) {
 
             if (!errorState.value.hasError) {
 
                 try {
                     val result = repository.search(token = token, page = p, query = query.value)
                     results.addAll(result)
-                    if (p == page.value) {
+                    if (p == page.intValue) {
                         recipes.value = results
                         loading.value = false
                     }
@@ -173,7 +174,7 @@ class RecipeListViewModel @Inject constructor(
 
     private fun resetSearchState() {
         recipes.value = listOf()
-        page.value = 1
+        page.intValue = 1
         onChangeRecipeListScrollPosition(0)
         if (selectedFoodCategory.value?.value != query.value) {
             clearSelectedCategory()
@@ -191,27 +192,27 @@ class RecipeListViewModel @Inject constructor(
     }
 
     private fun incrementPage() {
-        setPage(page.value + 1)
+        setPage(page.intValue + 1)
     }
 
     private fun setListScrollPosition(position: Int) {
         recipeListScrollPosition = position
-        savedStateHandle.set(STATE_LIST_POSITION, position)
+        savedStateHandle[STATE_LIST_POSITION] = position
     }
 
     private fun setPage(page: Int) {
-        this.page.value = page
-        savedStateHandle.set(STATE_KEY_PAGE, page)
+        this.page.intValue = page
+        savedStateHandle[STATE_KEY_PAGE] = page
     }
 
     private fun setSelectedCategory(category: FoodCategory?) {
         selectedFoodCategory.value = category
-        savedStateHandle.set(STATE_KEY_SELECTED_CATEGORY, category)
+        savedStateHandle[STATE_KEY_SELECTED_CATEGORY] = category
     }
 
     private fun setQuery(query: String) {
         this.query.value = query
-        savedStateHandle.set(STATE_KEY_QUERY, query)
+        savedStateHandle[STATE_KEY_QUERY] = query
     }
 
 

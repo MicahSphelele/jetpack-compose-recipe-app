@@ -10,10 +10,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.recipeapp.domain.model.enums.UiState
-import com.recipeapp.presentation.BaseApp
 import com.recipeapp.presentation.components.AppAlertDialog
 import com.recipeapp.presentation.components.RecipeList
 import com.recipeapp.presentation.components.SearchAppBar
@@ -30,7 +28,7 @@ fun RecipeListScreen(
     val query = viewModel.query.value
     val selectedCategory = viewModel.selectedFoodCategory.value
     val scaffoldState = rememberScaffoldState()
-    val page = viewModel.page.value
+    val page = viewModel.page.intValue
     val errorState = viewModel.errorState.value
     val isLoading = viewModel.loading.value
     val isDialogShowing = remember { mutableStateOf(false) }
@@ -54,6 +52,7 @@ fun RecipeListScreen(
 
         ) {
             RecipeList(
+                contentPaddingValues = it,
                 loading = isLoading,
                 recipes = recipes,
                 onChangeRecipeListScrollPosition = viewModel::onChangeRecipeListScrollPosition,

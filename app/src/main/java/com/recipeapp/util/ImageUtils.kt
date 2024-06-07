@@ -13,7 +13,6 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.recipeapp.R
 
-const val DEFAULT_RECIPE_IMAGE = R.drawable.empty_plate
 
 @Composable
 fun loadPicture(url: String, @DrawableRes default: Int) : MutableState<Bitmap?> {

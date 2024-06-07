@@ -27,7 +27,7 @@ fun LoadingRecipeListShimmer(
         val cardHeightPx = with(LocalDensity.current) { (cardHeight - padding).toPx() }
         val gradientWidth: Float = (0.2f * cardHeightPx)
 
-        val infiniteTransition = rememberInfiniteTransition()
+        val infiniteTransition = rememberInfiniteTransition(label = "Shimmer Transition")
 
         val xCardShimmer = infiniteTransition.animateFloat(
             initialValue = 0f,
@@ -39,7 +39,7 @@ fun LoadingRecipeListShimmer(
                     delayMillis = 300
                 ),
                 repeatMode = RepeatMode.Restart
-            )
+            ), label = "Shimmer X"
         )
 
         val yCardShimmer = infiniteTransition.animateFloat(
@@ -52,7 +52,7 @@ fun LoadingRecipeListShimmer(
                     delayMillis = 300
                 ),
                 repeatMode = RepeatMode.Restart
-            )
+            ), label = "Shimmer Y"
         )
 
         val colors = listOf(

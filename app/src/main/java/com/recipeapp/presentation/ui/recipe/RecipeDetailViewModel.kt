@@ -62,7 +62,7 @@ class RecipeDetailViewModel @Inject constructor(
         try {
             val recipe = repository.get(token = token, id)
             this.recipe.value = recipe
-            savedStateHandle.set(STATE_KEY_RECIPE_ID, recipe.id)
+            savedStateHandle[STATE_KEY_RECIPE_ID] = recipe.id
             isLoading.value = false
         } catch (ex: Exception) {
             ex.printStackTrace()

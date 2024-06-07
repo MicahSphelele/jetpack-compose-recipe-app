@@ -1,10 +1,9 @@
 plugins {
     id("com.android.application")
-    id("com.android.internal.application")
-    id("kotlin-android")
+    id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
+    id("org.jetbrains.kotlin.kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 def propFile = rootProject.file("./local.properties")
@@ -12,12 +11,15 @@ def localProperties = new Properties()
 localProperties.load(new FileInputStream(propFile))
 
 android {
-    compileSdkVersion 31
+
+    compileSdk 34
+
+    namespace = "com.recipeapp"
 
     defaultConfig {
         applicationId "com.recipeapp"
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -36,14 +38,12 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
-        useIR = true
     }
     buildFeatures {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion composeVersion
-        //kotlinCompilerVersion kotlinVersion
+        kotlinCompilerExtensionVersion "1.5.14"
     }
 }
 
@@ -52,17 +52,11 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     implementation("androidx.core:core-ktx:1.7.0")
 
-    def appCompatVersion = "1.4.0-rc01"
-    implementation("androidx.appcompat:appcompat:$appCompatVersion")
+    implementation("androidx.appcompat:appcompat:1.6.1")
 
-    def materialVersion = "1.4.0"
-    implementation("com.google.android.material:material:$materialVersion")
+    implementation("com.google.android.material:material:1.4.0")
 
-    def constraintLayoutVersion = "2.1.1"
-    implementation("androidx.constraintlayout:constraintlayout:$constraintLayoutVersion")
-
-    def androidxUIToolingVersion = "1.0.0-alpha07"
-    implementation("androidx.ui:ui-tooling:$androidxUIToolingVersion")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.1")
 
     implementation("androidx.compose.ui:ui:$composeVersion")
     implementation("androidx.compose.foundation:foundation:$composeVersion")
@@ -71,42 +65,33 @@ dependencies {
     implementation("androidx.compose.material:material:$composeVersion")
     implementation("androidx.compose.material:material-icons-core:$composeVersion")
     implementation("androidx.compose.material:material-icons-extended:$composeVersion")
+    implementation("androidx.compose.ui:ui-tooling:$composeVersion")
 
-//    def composeLifeCycleVersion = "2.4.0"
-//    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$composeLifeCycleVersion")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0-rc01")
 
-    def composeConstraintLayoutVersion = "1.0.0-rc01"
-    implementation("androidx.constraintlayout:constraintlayout-compose:$composeConstraintLayoutVersion")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
+    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
 
-    def navigationVersion = "2.3.5"
-    implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
-
-    def composeNavigationVersion = "2.4.0-beta02"
-    implementation("androidx.navigation:navigation-compose:$composeNavigationVersion")
+    implementation("androidx.navigation:navigation-compose:2.4.0-beta02")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
 
-    def retrofitVersion = "2.9.0"
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
 
-    implementation("com.google.dagger:hilt-android:$hiltVersion")
-    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    implementation("com.google.dagger:hilt-android:2.49")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    kapt("com.google.dagger:hilt-android-compiler:2.49")
+    kapt("androidx.hilt:hilt-compiler:1.2.0")
 
-    def hiltLifecycleViewModelVersion = "1.0.0-alpha03"
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:$hiltLifecycleViewModelVersion")
-    kapt("androidx.hilt:hilt-compiler:$hiltLifecycleViewModelVersion")
-
-    def glideVersion = "4.12.0"
-    implementation("com.github.bumptech.glide:glide:$glideVersion")
+    implementation("com.github.bumptech.glide:glide:4.12.0")
     // Skip this if you don't want to use integration libraries or configure Glide.
-    kapt("com.github.bumptech.glide:compiler:$glideVersion")
+    kapt("com.github.bumptech.glide:compiler:4.12.0")
 
-    def datastoreVersion = "1.0.0"
-    implementation("androidx.datastore:datastore-preferences:$datastoreVersion")
-    implementation("androidx.datastore:datastore-preferences-core:$datastoreVersion")
 
-    def lifecycleProcessVersion = "2.4.0"
-    implementation("androidx.lifecycle:lifecycle-process:$lifecycleProcessVersion")
-    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycleProcessVersion")
+
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.datastore:datastore-preferences-core:1.0.0")
+
+    implementation("androidx.lifecycle:lifecycle-process:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-common-java8:2.4.0")
 }

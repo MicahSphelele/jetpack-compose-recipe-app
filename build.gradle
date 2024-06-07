@@ -1,9 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        kotlinVersion = "1.5.31"
-        composeVersion = '1.0.5'
-        hiltVersion = "2.38.1"
+        kotlinVersion = "1.9.24"
+        composeVersion = "1.6.7"
+        hiltVersion = "2.49"
     }
     repositories {
         google()
@@ -11,7 +11,7 @@ buildscript {
         maven { url 'https://maven.google.com' }
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.0.3")
+        classpath("com.android.tools.build:gradle:8.3.2")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         classpath("com.google.dagger:hilt-android-gradle-plugin:$hiltVersion")
         // NOTE: Do not place your application dependencies here; they belong

@@ -2,6 +2,7 @@ package com.recipeapp.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,6 +24,7 @@ import com.recipeapp.util.AppLogger
 @ExperimentalMaterialApi
 @Composable
 fun RecipeList(
+    contentPaddingValues: PaddingValues,
     loading: Boolean,
     recipes: List<Recipe>,
     onChangeRecipeListScrollPosition: (Int) -> Unit,
