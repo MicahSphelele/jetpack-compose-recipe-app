@@ -21,4 +21,4 @@ fun getAllFoodCategories(): List<FoodCategory> = listOf(
 )
 
 fun getFoodCategory(value: String): FoodCategory? =
-    FoodCategory.values().associateBy(FoodCategory::value)[value]
+    FoodCategory.entries.associateBy(FoodCategory::value)[value]

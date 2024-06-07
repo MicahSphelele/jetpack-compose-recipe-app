@@ -36,7 +36,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.recipeapp.domain.model.enums.FoodCategory
-import com.recipeapp.domain.model.enums.UiState
+import com.recipeapp.domain.model.enums.ThemeState
 import com.recipeapp.domain.model.enums.getAllFoodCategories
 import com.recipeapp.domain.model.events.RecipeListDataEvent
 
@@ -48,7 +48,7 @@ fun SearchAppBar(
     onExecuteSearch: (RecipeListDataEvent) -> Unit,
     onSelectedCategoryChange: (String) -> Unit,
     selectedCategory: FoodCategory?,
-    onChangeUiMode: (UiState) -> Unit
+    onThemeChange: (ThemeState) -> Unit
 ) {
 
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -113,7 +113,7 @@ fun SearchAppBar(
 
                     ContextMenu(
                         expanded = dropDownMenuExpanded,
-                        onChangeUiMode = onChangeUiMode
+                        onThemeChange = onThemeChange
                     )
                 }
             }
@@ -149,7 +149,7 @@ fun SearchAppBar(
 @Composable
 fun ContextMenu(
     expanded: MutableState<Boolean>,
-    onChangeUiMode: (UiState) -> Unit
+    onThemeChange: (ThemeState) -> Unit
 ) {
     DropdownMenu(
         modifier = Modifier
@@ -160,7 +160,7 @@ fun ContextMenu(
         DropdownMenuItem(onClick = {
 
             expanded.value = false
-            onChangeUiMode(UiState.LIGHT)
+            onThemeChange(ThemeState.LIGHT)
         }, text = {
             Text("Light")
         })
@@ -169,7 +169,7 @@ fun ContextMenu(
 
         DropdownMenuItem(onClick = {
             expanded.value = false
-            onChangeUiMode(UiState.DARK)
+            onThemeChange(ThemeState.DARK)
         }, text = {
             Text("Dark")
         })
@@ -178,7 +178,7 @@ fun ContextMenu(
 
         DropdownMenuItem(onClick = {
             expanded.value = false
-            onChangeUiMode(UiState.SYSTEM)
+            onThemeChange(ThemeState.SYSTEM)
         }, text = {
             Text("System Default")
         })

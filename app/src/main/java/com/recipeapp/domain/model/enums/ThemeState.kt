@@ -1,5 +1,5 @@
 package com.recipeapp.domain.model.enums
 
-enum class UiState {
+enum class ThemeState {
     LIGHT, DARK, SYSTEM
 }

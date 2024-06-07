@@ -2,7 +2,7 @@ package com.recipeapp.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.recipeapp.domain.model.enums.UiState
+import com.recipeapp.domain.model.enums.ThemeState
 import com.recipeapp.domain.usecases.theme.ThemeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,5 +22,5 @@ class MainViewModel @Inject constructor(private val themeUseCases: ThemeUseCases
             _isDarkMode.value = it
         }
 
-    fun changeUiMode(uiState: UiState) = themeUseCases.changeThemeStateUseCase(uiState)
+    fun changeUiMode(themeState: ThemeState) = themeUseCases.changeThemeStateUseCase(themeState)
 }

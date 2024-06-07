@@ -10,7 +10,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.recipeapp.domain.model.enums.UiState
+import com.recipeapp.domain.model.enums.ThemeState
 import com.recipeapp.domain.model.events.RecipeEvent
 import com.recipeapp.domain.model.screengraph.Screen
 import com.recipeapp.presentation.ui.recipe.RecipeDetailViewModel
@@ -19,13 +19,12 @@ import com.recipeapp.presentation.ui.recipe.event.RecipeDetailEvent
 import com.recipeapp.presentation.ui.recipe_list.RecipeListScreen
 import com.recipeapp.presentation.ui.recipe_list.RecipeListViewModel
 import com.recipeapp.presentation.ui.recipe_list.event.RecipeListEvent
-import com.recipeapp.util.AppLogger
 
 @ExperimentalComposeUiApi
 @Composable
 fun RecipeAppNavGraph(
     navController: NavHostController,
-    onChangeTheme: (UiState) -> Unit
+    onChangeTheme: (ThemeState) -> Unit
 ) {
 
     NavHost(
@@ -48,7 +47,7 @@ fun RecipeAppNavGraph(
                     }
 
                     is RecipeListEvent.OnItemClick -> {
-                        navController.navigate(Screen.RecipeDetailsScreen.buildRoute(id = event.id))
+                        navController.navigate(Screen.RecipeDetailsScreen.buildWithParams(id = event.id))
                     }
 
                     is RecipeListEvent.OnQueryChange -> {
@@ -71,7 +70,7 @@ fun RecipeAppNavGraph(
         }
 
         composable(
-            route = "${Screen.RecipeDetailsScreen.route}/{recipeId}",
+            route = Screen.RecipeDetailsScreen.routeWithParams,
             arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
         ) {
             val viewModel = hiltViewModel<RecipeDetailViewModel>()

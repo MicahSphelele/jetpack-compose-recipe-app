@@ -40,7 +40,7 @@ fun RecipeListScreen(
                     onExecuteSearch = { event ->
                         onEvent(RecipeListEvent.OnTriggerDataEvent(event = event))
                     },
-                    onChangeUiMode = { theme ->
+                    onThemeChange = { theme ->
                         onEvent(RecipeListEvent.OnThemeChange(theme = theme))
                     }
                 )

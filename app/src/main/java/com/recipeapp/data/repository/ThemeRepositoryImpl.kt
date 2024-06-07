@@ -2,7 +2,7 @@ package com.recipeapp.data.repository
 
 import android.content.Context
 import androidx.compose.runtime.mutableStateOf
-import com.recipeapp.domain.model.enums.UiState
+import com.recipeapp.domain.model.enums.ThemeState
 import com.recipeapp.domain.repository.ThemeRepository
 import com.recipeapp.util.AppConstants
 import com.recipeapp.util.DataStoreManager
@@ -14,7 +14,7 @@ class ThemeRepositoryImpl(context: Context, private val scope: CoroutineScope) :
 
     private var dataStoreManager: DataStoreManager = DataStoreManager(context)
 
-    private val uiState = mutableStateOf(UiState.LIGHT.ordinal)
+    private val themeState = mutableStateOf(ThemeState.LIGHT.ordinal)
 
     override fun isUIStateInDarkMode(
         scope: CoroutineScope,
@@ -23,14 +23,14 @@ class ThemeRepositoryImpl(context: Context, private val scope: CoroutineScope) :
     ) {
 
         scope.launch {
-            uiState.value = dataStoreManager.getInteger(AppConstants.UI_MODE)
+            themeState.value = dataStoreManager.getInteger(AppConstants.UI_MODE)
         }
 
-         when (uiState.value) {
-            UiState.LIGHT.ordinal -> {
+         when (themeState.value) {
+            ThemeState.LIGHT.ordinal -> {
                 onChangeTheme(false)
             }
-            UiState.DARK.ordinal -> {
+            ThemeState.DARK.ordinal -> {
                 onChangeTheme(true)
 
             }
@@ -40,8 +40,8 @@ class ThemeRepositoryImpl(context: Context, private val scope: CoroutineScope) :
         }
     }
 
-    override fun changeUiMode(uiModeState: UiState) {
-        this.uiState.value = uiModeState.ordinal
+    override fun changeUiMode(uiModeState: ThemeState) {
+        this.themeState.value = uiModeState.ordinal
         scope.launch {
             dataStoreManager.saveInteger(AppConstants.UI_MODE, uiModeState.ordinal)
         }

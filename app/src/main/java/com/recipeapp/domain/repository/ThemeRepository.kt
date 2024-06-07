@@ -1,6 +1,6 @@
 package com.recipeapp.domain.repository
 
-import com.recipeapp.domain.model.enums.UiState
+import com.recipeapp.domain.model.enums.ThemeState
 import kotlinx.coroutines.CoroutineScope
 
 interface ThemeRepository {
@@ -9,5 +9,5 @@ interface ThemeRepository {
         isSystemInDarkTheme: Boolean,
         onChangeTheme: (Boolean) -> Unit
     )
-    fun changeUiMode(uiModeState: UiState)
+    fun changeUiMode(uiModeState: ThemeState)
 }
