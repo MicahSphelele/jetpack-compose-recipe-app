@@ -5,7 +5,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.recipeapp.presentation.theme.AppTheme
 import com.recipeapp.presentation.ui.RecipeAppNavGraph
@@ -26,12 +28,12 @@ class MainActivity : AppCompatActivity() {
 
             viewModel.isUIStateInDarkMode(isSystemInDarkTheme = isSystemInDarkTheme)
 
-            AppTheme(darkTheme = viewModel.isDarkMode.value) {
+            val isDarkMode by viewModel.isDarkMode.collectAsStateWithLifecycle()
 
-                val navController = rememberNavController()
+            AppTheme(isDarkMode = isDarkMode) {
 
                 RecipeAppNavGraph(
-                    navController = navController,
+                    navController = rememberNavController(),
                     onChangeTheme = viewModel::changeUiMode
                 )
             }

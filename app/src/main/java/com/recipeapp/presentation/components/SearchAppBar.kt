@@ -153,6 +153,8 @@ fun ContextMenu(
     onChangeUiMode: (UiState) -> Unit
 ) {
     DropdownMenu(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.surfaceContainerHigh),
         expanded = expanded.value,
         onDismissRequest = { expanded.value = false },
     ) {

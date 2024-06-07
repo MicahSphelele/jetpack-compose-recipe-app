@@ -61,21 +61,19 @@ fun RecipeDetailsScreen(
             },
             snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
         ) { contentPadding ->
-            Box(modifier = Modifier.fillMaxSize()) {
 
-                if (isLoading && recipe == null) {
+            if (isLoading && recipe == null) {
 
-                    LoadingRecipeDetailShimmer(
-                        contentPadding = contentPadding,
-                        cardHeight = 250.dp
-                    )
+                LoadingRecipeDetailShimmer(
+                    contentPadding = contentPadding,
+                    cardHeight = 250.dp
+                )
 
-                    CircularIndeterminateProgressBar(isDisplayed = true, verticalBias = 0.3f)
+                CircularIndeterminateProgressBar(isDisplayed = true, verticalBias = 0.3f)
 
-                } else {
-                    recipe?.let {
-                        RecipeDetailView(contentPadding = contentPadding, recipe = it)
-                    }
+            } else {
+                recipe?.let {
+                    RecipeDetailView(contentPadding = contentPadding, recipe = it)
                 }
             }
         }

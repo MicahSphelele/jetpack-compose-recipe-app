@@ -38,7 +38,10 @@ fun RecipeDetailView(
 
     LazyColumn(
         contentPadding = contentPadding,
-        modifier = Modifier.fillMaxWidth()) {
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.surfaceContainerHighest)
+            .fillMaxSize()
+    ) {
         item {
             recipe.featuredImage?.let { url ->
                 AsyncImage(

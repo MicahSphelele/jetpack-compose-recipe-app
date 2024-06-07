@@ -33,11 +33,11 @@ private val darkThemeColors = darkColorScheme(
 
 @Composable
 fun AppTheme(
-    darkTheme: Boolean,
+    isDarkMode: Boolean,
     content: @Composable () -> Unit,
 ) {
     MaterialTheme(
-        colorScheme = if (darkTheme) darkThemeColors else lightThemeColors,
+        colorScheme = if (isDarkMode) darkThemeColors else lightThemeColors,
         typography = latoTypography,
         shapes = shapes
     ){

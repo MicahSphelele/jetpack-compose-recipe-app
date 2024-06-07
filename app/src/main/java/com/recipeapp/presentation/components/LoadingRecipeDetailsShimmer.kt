@@ -60,7 +60,12 @@ fun LoadingRecipeDetailShimmer(
             Color.LightGray.copy(alpha = .9f),
         )
 
-        LazyColumn(contentPadding = contentPadding) {
+        LazyColumn(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+                .fillMaxSize(),
+            contentPadding = contentPadding,
+        ) {
             item {
                 ShimmerRecipeDetailsCard(
                     colors = colors,
