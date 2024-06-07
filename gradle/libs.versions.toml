@@ -2,9 +2,9 @@
 agp = "8.3.2"
 kotlin = "1.9.24"
 coreKtx = "1.13.1"
-junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
+#junit = "4.13.2"
+#junitVersion = "1.1.5"
+#espressoCore = "3.5.1"
 lifecycleRuntimeKtx = "2.7.0"
 activityCompose = "1.9.0"
 composeBom = "2024.05.00"
@@ -18,7 +18,7 @@ material = "1.12.0"
 constraintlayout = "2.1.4"
 retrofit2 = "2.9.0"
 okhttp3Logger = "4.11.0"
-glide = "4.16.0"
+#glide = "4.16.0"
 datastore = "1.1.1"
 coilKT = "2.6.0"
 
@@ -35,9 +35,9 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 androidx-datastore-preferences-core = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "datastore" }
 
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+#junit = { group = "junit", name = "junit", version.ref = "junit" }
+#androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+#androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
@@ -46,8 +46,8 @@ androidx-compose-runtime-rxjava2= { group = "androidx.compose.runtime", name = "
 androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+#androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+#androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 androidx-compose-icons-core = { group = "androidx.compose.material", name = "material-icons-core" }
@@ -57,8 +57,8 @@ androidx-compose-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-r
 androidx-compose-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "androidxConstraintlayout" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit2" }
 retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit2" }
-glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
-glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+#glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+#glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilKT" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp3Logger" }
 
