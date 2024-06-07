@@ -13,23 +13,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.recipeapp.domain.model.Recipe
-import com.recipeapp.domain.model.screengraph.Screen
-import com.recipeapp.domain.model.events.RecipeListEvent
-import com.recipeapp.presentation.ui.recipe_list.RecipeListViewModel
-import com.recipeapp.util.AppLogger
+import com.recipeapp.domain.model.events.RecipeListDataEvent
+import com.recipeapp.presentation.ui.recipe_list.RecipeListViewModel.Companion.PAGE_SIZE
 
 @Composable
 fun RecipeList(
     contentPadding: PaddingValues,
     loading: Boolean,
     recipes: List<Recipe>,
-    onChangeRecipeListScrollPosition: (Int) -> Unit,
-    onTriggeredEvent: (RecipeListEvent) -> Unit,
-    navController: NavController,
     page: Int,
-    snackbarHostState: SnackbarHostState
+    snackbarHostState: SnackbarHostState,
+    onChangeRecipeListScrollPosition: (Int) -> Unit,
+    onTriggeredEvent: (RecipeListDataEvent) -> Unit,
+    onItemClick: (Int) -> Unit,
 ) {
 
     Box(
@@ -49,15 +46,14 @@ fun RecipeList(
             LazyColumn(contentPadding = contentPadding) {
                 itemsIndexed(items = recipes) { index, recipe ->
                     onChangeRecipeListScrollPosition(index)
-                    if ((index + 1) >= (page * RecipeListViewModel.PAGE_SIZE) && !loading) {
-                        onTriggeredEvent(RecipeListEvent.NextPageEvent)
+                    if ((index + 1) >= (page * PAGE_SIZE) && !loading) {
+                        onTriggeredEvent(RecipeListDataEvent.NextPageEvent)
                     }
                     RecipeCard(
                         recipe = recipe,
                         onClick = {
-                            recipe.id?.let { recipeID ->
-                                AppLogger.info("recipeId: $recipeID")
-                                navController.navigate("${Screen.RecipeDetailsScreen.route}/${recipeID}")
+                            recipe.id?.let { id ->
+                                onItemClick(id)
                             }
                         })
                 }

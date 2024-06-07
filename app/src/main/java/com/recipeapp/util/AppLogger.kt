@@ -4,7 +4,7 @@ import android.util.Log
 
 object AppLogger {
 
-    private const val TAG = "RecipeApp"
+    private const val TAG = "@Data"
 
     fun info(message: String) {
         Log.i(TAG, message)

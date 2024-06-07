@@ -5,4 +5,6 @@ sealed class RecipeDetailEvent {
     data object OnStart: RecipeDetailEvent()
 
     data object OnBackPressed: RecipeDetailEvent()
+
+    data object OnCloseDialog: RecipeDetailEvent()
 }

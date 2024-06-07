@@ -17,6 +17,9 @@ import com.recipeapp.presentation.ui.recipe.RecipeDetailViewModel
 import com.recipeapp.presentation.ui.recipe.RecipeDetailsScreen
 import com.recipeapp.presentation.ui.recipe.event.RecipeDetailEvent
 import com.recipeapp.presentation.ui.recipe_list.RecipeListScreen
+import com.recipeapp.presentation.ui.recipe_list.RecipeListViewModel
+import com.recipeapp.presentation.ui.recipe_list.event.RecipeListEvent
+import com.recipeapp.util.AppLogger
 
 @ExperimentalComposeUiApi
 @Composable
@@ -29,11 +32,42 @@ fun RecipeAppNavGraph(
         navController = navController,
         startDestination = Screen.RecipeListScreen.route
     ) {
+
         composable(route = Screen.RecipeListScreen.route) {
-            RecipeListScreen(
-                navController = navController,
-                onChangeTheme = onChangeTheme
-            )
+
+            val viewModel = hiltViewModel<RecipeListViewModel>()
+
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+            RecipeListScreen(uiState = uiState) { event ->
+
+                when(event) {
+
+                    is RecipeListEvent.OnTriggerDataEvent -> {
+                        viewModel.onTriggeredEvent(event = event.event)
+                    }
+
+                    is RecipeListEvent.OnItemClick -> {
+                        navController.navigate(Screen.RecipeDetailsScreen.buildRoute(id = event.id))
+                    }
+
+                    is RecipeListEvent.OnQueryChange -> {
+                        viewModel.onQueryChange(query = event.query)
+                    }
+
+                    is RecipeListEvent.OnThemeChange -> {
+                        onChangeTheme(event.theme)
+                    }
+
+                    is RecipeListEvent.OnSelectedCategoryChange -> {
+                        viewModel.onSelectedCategoryChange(category = event.category)
+                    }
+
+                    is RecipeListEvent.OnScrollPositionChange -> {
+                        viewModel.onChangeRecipeListScrollPosition(position = event.position)
+                    }
+                }
+            }
         }
 
         composable(
@@ -55,6 +89,11 @@ fun RecipeAppNavGraph(
                         }
 
                         is RecipeDetailEvent.OnBackPressed -> {
+                            navController.navigateUp()
+                        }
+
+                        is RecipeDetailEvent.OnCloseDialog -> {
+                            viewModel.updateShowDialogState(isDialogShowing = false)
                             navController.navigateUp()
                         }
                     }

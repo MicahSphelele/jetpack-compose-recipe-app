@@ -6,5 +6,6 @@ import com.recipeapp.domain.model.Recipe
 data class RecipeDetailUIState(
     val recipe: Recipe? = null,
     val isLoading: Boolean = false,
+    val isDialogShowing: Boolean = false,
     val errorState: ErrorState = ErrorState(false, null)
 )

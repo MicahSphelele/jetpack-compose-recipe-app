@@ -24,6 +24,7 @@ fun AppAlertDialog(
 ) {
     if (isShowing) {
         AlertDialog(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             onDismissRequest = {
                 //onClose()
             },

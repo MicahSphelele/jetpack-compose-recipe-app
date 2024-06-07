@@ -13,7 +13,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bedtime
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
@@ -39,14 +38,14 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.recipeapp.domain.model.enums.FoodCategory
 import com.recipeapp.domain.model.enums.UiState
 import com.recipeapp.domain.model.enums.getAllFoodCategories
-import com.recipeapp.domain.model.events.RecipeListEvent
+import com.recipeapp.domain.model.events.RecipeListDataEvent
 
 @ExperimentalComposeUiApi
 @Composable
 fun SearchAppBar(
     query: String,
     onQueryChange: (String) -> Unit,
-    onExecuteSearch: (RecipeListEvent) -> Unit,
+    onExecuteSearch: (RecipeListDataEvent) -> Unit,
     onSelectedCategoryChange: (String) -> Unit,
     selectedCategory: FoodCategory?,
     onChangeUiMode: (UiState) -> Unit
@@ -82,7 +81,7 @@ fun SearchAppBar(
                         imeAction = ImeAction.Search
                     ),
                     keyboardActions = KeyboardActions(onDone = {
-                        onExecuteSearch(RecipeListEvent.SearchEvent)
+                        onExecuteSearch(RecipeListDataEvent.SearchEvent)
                         keyboardController?.hide()
                     }),
                     leadingIcon = {
@@ -138,7 +137,7 @@ fun SearchAppBar(
                             onSelectedCategoryChange(category)
                         }, isSelected = selectedCategory == it,
                         onExecuteSearch = {
-                            onExecuteSearch(RecipeListEvent.SearchEvent)
+                            onExecuteSearch(RecipeListDataEvent.SearchEvent)
                         })
                 }
 

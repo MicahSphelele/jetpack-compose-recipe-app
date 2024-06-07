@@ -36,8 +36,8 @@ class RecipeDetailViewModel @Inject constructor(
 
     init {
         //Restore if the process dies
-        savedStateHandle.get<Int>(STATE_KEY_RECIPE_ID)?.let { recipeID ->
-            onTriggeredEvent(GetDetailedRecipeEvent(id = recipeID))
+        savedStateHandle.get<Int>(STATE_KEY_RECIPE_ID)?.let { id ->
+            onTriggeredEvent(GetDetailedRecipeEvent(id = id))
         }
     }
 
@@ -46,7 +46,7 @@ class RecipeDetailViewModel @Inject constructor(
             try {
                 when(event) {
                     is GetDetailedRecipeEvent -> {
-                        getRecipe(event.id)
+                        getRecipe(id = event.id)
                     }
                 }
             } catch (ex: Exception) {
@@ -54,6 +54,10 @@ class RecipeDetailViewModel @Inject constructor(
                 AppLogger.error("onTriggeredEvent event error", ex)
             }
         }
+    }
+
+    fun updateShowDialogState(isDialogShowing: Boolean) {
+        _uiState.value = uiState.value.copy(isDialogShowing = isDialogShowing)
     }
 
     private suspend fun getRecipe(id: Int) {
@@ -69,7 +73,8 @@ class RecipeDetailViewModel @Inject constructor(
         } catch (ex: Exception) {
             ex.printStackTrace()
             AppLogger.error("Something went wrong on the server : ${ex.message}")
-            updateErrorState(ErrorState(true, ex.message))
+            updateShowDialogState(isDialogShowing = true)
+            updateErrorState(ErrorState(hasError = true, ex.message))
         }
     }
 
