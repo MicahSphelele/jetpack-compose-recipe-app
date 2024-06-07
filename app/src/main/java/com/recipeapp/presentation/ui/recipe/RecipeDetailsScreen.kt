@@ -6,8 +6,10 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
@@ -26,7 +28,7 @@ fun RecipeDetailsScreen(
     uiState: RecipeDetailUIState = RecipeDetailUIState(),
     onEvent:(RecipeDetailEvent) -> Unit,
 ) {
-    val isDialogShowing = remember { mutableStateOf(false) }
+    var isDialogShowing by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
 
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -73,15 +75,19 @@ fun RecipeDetailsScreen(
                 }
             }
         }
-        return
+    } else {
+
+        isDialogShowing = true
+
+        AppAlertDialog(
+            title = "Network Error",
+            message = "Something went wrong : ${uiState.errorState.errorMessage}",
+            buttonText = "Ok",
+            isShowing = isDialogShowing,
+            onClose = {
+                isDialogShowing = false
+            }
+        )
     }
-    isDialogShowing.value = true
-    AppAlertDialog(
-        activity = (LocalContext.current as AppCompatActivity),
-        title = "Network Error",
-        message = "Something went wrong : ${uiState.errorState.errorMessage}",
-        buttonText = "Ok",
-        isShowing = isDialogShowing
-    )
 }
 

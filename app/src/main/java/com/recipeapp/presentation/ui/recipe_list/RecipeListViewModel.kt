@@ -13,9 +13,13 @@ import com.recipeapp.domain.model.enums.FoodCategory
 import com.recipeapp.domain.model.enums.getFoodCategory
 import com.recipeapp.domain.model.events.RecipeListEvent
 import com.recipeapp.domain.repository.RecipeRepository
+import com.recipeapp.presentation.ui.recipe.state.RecipeDetailUIState
+import com.recipeapp.presentation.ui.recipe_list.state.RecipeListUIState
 import com.recipeapp.util.AppLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
@@ -35,6 +39,9 @@ class RecipeListViewModel @Inject constructor(
         const val STATE_LIST_POSITION = "recipe.state.query.list_position"
         const val STATE_KEY_SELECTED_CATEGORY = "recipe.state.query.selected_category"
     }
+
+    private val _uiState = MutableStateFlow(RecipeListUIState())
+    val uiState = _uiState.asStateFlow()
 
     val recipes: MutableState<List<Recipe>> = mutableStateOf(listOf())
     val errorState: MutableState<ErrorState> = mutableStateOf(ErrorState(false, null))
