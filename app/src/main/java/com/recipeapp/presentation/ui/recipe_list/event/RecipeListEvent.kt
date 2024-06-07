@@ -2,8 +2,11 @@ package com.recipeapp.presentation.ui.recipe_list.event
 
 import com.recipeapp.domain.model.enums.ThemeState
 import com.recipeapp.domain.model.events.RecipeListDataEvent
+import com.recipeapp.presentation.ui.recipe.event.RecipeDetailEvent
 
 sealed class RecipeListEvent {
+
+    data object OnCloseDialog: RecipeListEvent()
 
     data class OnTriggerDataEvent(val event: RecipeListDataEvent): RecipeListEvent()
 

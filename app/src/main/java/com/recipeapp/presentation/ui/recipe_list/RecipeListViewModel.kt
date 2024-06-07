@@ -1,5 +1,6 @@
 package com.recipeapp.presentation.ui.recipe_list
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -28,7 +29,7 @@ class RecipeListViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    companion object  {
+    companion object {
         const val PAGE_SIZE = 30
         const val STATE_KEY_PAGE = "recipe.state.page.key"
         const val STATE_KEY_QUERY = "recipe.state.query.key"
@@ -69,12 +70,14 @@ class RecipeListViewModel @Inject constructor(
     }
 
     fun onTriggeredEvent(event: RecipeListDataEvent) {
+        AppLogger.info("$event")
         viewModelScope.launch {
             try {
                 when (event) {
                     is RecipeListDataEvent.SearchEvent -> {
                         search()
                     }
+
                     is RecipeListDataEvent.NextPageEvent -> {
                         nextPage()
                     }
@@ -93,21 +96,21 @@ class RecipeListViewModel @Inject constructor(
 
     fun onSelectedCategoryChange(category: String) {
         val foodCategory = getFoodCategory(category)
-        //selectedFoodCategory.value = foodCategory
         setSelectedCategory(foodCategory)
         onQueryChange(category)
         onTriggeredEvent(RecipeListDataEvent.SearchEvent)
     }
 
-//    fun onChangeCategoryScrollPosition(position: Float) {
-//        categoryScrollPosition = position
-//    }
-
     fun onChangeRecipeListScrollPosition(position: Int) {
         setListScrollPosition(position)
     }
 
+    fun updateShowDialogState(isDialogShowing: Boolean) {
+        _uiState.value = uiState.value.copy(isDialogShowing = isDialogShowing)
+    }
+
     private suspend fun search() {
+
         updateIsLoading(isLoading = true)
         resetSearchState()
         delay(1000)
@@ -120,6 +123,7 @@ class RecipeListViewModel @Inject constructor(
             ex.printStackTrace()
             AppLogger.error("Something went wrong on the server : ${ex.message}")
             updateIsLoading(isLoading = false)
+            updateShowDialogState(isDialogShowing = true)
             updateErrorState(errorState = ErrorState(true, ex.message))
         }
     }
@@ -131,7 +135,7 @@ class RecipeListViewModel @Inject constructor(
             incrementPage()
             AppLogger.info("Next Page triggered : ${_uiState.value.page}")
             delay(1000)
-            if (_uiState.value.page> 1) {
+            if (_uiState.value.page > 1) {
                 val results = repository.search(
                     token = token,
                     page = _uiState.value.page,
@@ -148,6 +152,7 @@ class RecipeListViewModel @Inject constructor(
     private suspend fun restoreAppState() {
         updateIsLoading(isLoading = true)
         val results: MutableList<Recipe> = mutableListOf()
+        updateShowDialogState(isDialogShowing = false)
         updateErrorState(errorState = ErrorState(false, null))
 
         for (p in 1.._uiState.value.page) {
@@ -155,7 +160,8 @@ class RecipeListViewModel @Inject constructor(
             if (!_uiState.value.errorState.hasError) {
 
                 try {
-                    val result = repository.search(token = token, page = p, query = _uiState.value.query)
+                    val result =
+                        repository.search(token = token, page = p, query = _uiState.value.query)
                     results.addAll(result)
                     if (p == _uiState.value.page) {
                         updateRecipes(recipes = results)
@@ -163,7 +169,13 @@ class RecipeListViewModel @Inject constructor(
                     }
                 } catch (ex: Exception) {
                     AppLogger.error("Something went wrong on the server : ${ex.message}")
-                    updateErrorState(errorState = ErrorState(true, "Failed to restore app state"))
+                    updateShowDialogState(isDialogShowing = true)
+                    updateErrorState(
+                        errorState = ErrorState(
+                            hasError = true,
+                            errorMessage = "Failed to restore app state"
+                        )
+                    )
                 }
 
             }

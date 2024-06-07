@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.recipeapp.domain.model.enums.ThemeState
 import com.recipeapp.domain.model.events.RecipeEvent
+import com.recipeapp.domain.model.events.RecipeListDataEvent
 import com.recipeapp.domain.model.screengraph.Screen
 import com.recipeapp.presentation.ui.recipe.RecipeDetailViewModel
 import com.recipeapp.presentation.ui.recipe.RecipeDetailsScreen
@@ -64,6 +65,11 @@ fun RecipeAppNavGraph(
 
                     is RecipeListEvent.OnScrollPositionChange -> {
                         viewModel.onChangeRecipeListScrollPosition(position = event.position)
+                    }
+
+                    is RecipeListEvent.OnCloseDialog -> {
+                        viewModel.updateShowDialogState(isDialogShowing = false)
+                        viewModel.onTriggeredEvent(RecipeListDataEvent.SearchEvent)
                     }
                 }
             }

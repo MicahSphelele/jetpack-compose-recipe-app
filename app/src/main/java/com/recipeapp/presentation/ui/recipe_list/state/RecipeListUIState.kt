@@ -6,6 +6,7 @@ import com.recipeapp.domain.model.enums.FoodCategory
 
 data class RecipeListUIState(
     val isLoading: Boolean = false,
+    val isDialogShowing: Boolean = false,
     val recipes: List<Recipe> = emptyList(),
     val query: String = "",
     val selectedCategory: FoodCategory? = null,

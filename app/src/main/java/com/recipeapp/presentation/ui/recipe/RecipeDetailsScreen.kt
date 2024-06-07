@@ -5,10 +5,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -72,17 +69,16 @@ fun RecipeDetailsScreen(
                 }
             }
         }
-    } else {
-
-        AppAlertDialog(
-            title = "Network Error",
-            message = "Something went wrong : ${uiState.errorState.errorMessage}",
-            buttonText = "Ok",
-            isShowing = uiState.isDialogShowing,
-            onClose = {
-                onEvent(RecipeDetailEvent.OnCloseDialog)
-            }
-        )
     }
+
+    AppAlertDialog(
+        title = "Network Error",
+        message = "Something went wrong : ${uiState.errorState.errorMessage}",
+        buttonText = "Ok",
+        isShowing = uiState.isDialogShowing,
+        onClose = {
+            onEvent(RecipeDetailEvent.OnCloseDialog)
+        }
+    )
 }
 

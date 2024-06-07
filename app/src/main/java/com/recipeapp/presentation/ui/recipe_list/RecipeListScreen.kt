@@ -4,10 +4,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import com.recipeapp.presentation.components.AppAlertDialog
 import com.recipeapp.presentation.components.RecipeList
@@ -22,7 +19,6 @@ fun RecipeListScreen(
     onEvent: (RecipeListEvent) -> Unit
 ) {
 
-    var isDialogShowing by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
 
     if (!uiState.errorState.hasError) {
@@ -68,18 +64,15 @@ fun RecipeListScreen(
             )
         }
 
-    } else {
-
-        isDialogShowing = true
-
-        AppAlertDialog(
-            title = "Network Error",
-            message = "Something went wrong : ${uiState.errorState.errorMessage}",
-            buttonText = "Ok",
-            isShowing = isDialogShowing,
-            onClose = {
-                isDialogShowing = false
-            }
-        )
     }
+
+    AppAlertDialog(
+        title = "Network Error",
+        message = "Something went wrong : ${uiState.errorState.errorMessage}",
+        buttonText = "Ok",
+        isShowing = uiState.isDialogShowing,
+        onClose = {
+           onEvent(RecipeListEvent.OnCloseDialog)
+        }
+    )
 }
