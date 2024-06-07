@@ -60,7 +60,9 @@ glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", versi
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",  version.ref = "kotlin"  }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt",  version.ref = "kotlin"  }
 kotlin-symbol-processor = { id = "com.google.devtools.ksp", version.ref = "kotlinSymbolProcessor" }
