@@ -48,9 +48,9 @@ fun RecipeListScreen(
                 SnackbarHost(hostState = snackbarHostState)
             }
 
-        ) {
+        ) { contentPadding ->
             RecipeList(
-                contentPaddingValues = it,
+                contentPadding = contentPadding,
                 loading = isLoading,
                 recipes = recipes,
                 onChangeRecipeListScrollPosition = viewModel::onChangeRecipeListScrollPosition,

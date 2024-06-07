@@ -19,6 +19,7 @@ constraintlayout = "2.1.4"
 retrofit2 = "2.9.0"
 glide = "4.16.0"
 datastore = "1.1.1"
+coilKT = "2.6.0"
 
 [libraries]
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "daggerHilt" }
@@ -57,6 +58,7 @@ retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = 
 retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit2" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilKT" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

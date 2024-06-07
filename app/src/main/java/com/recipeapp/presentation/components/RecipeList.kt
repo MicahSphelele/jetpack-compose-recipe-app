@@ -22,7 +22,7 @@ import com.recipeapp.util.AppLogger
 
 @Composable
 fun RecipeList(
-    contentPaddingValues: PaddingValues,
+    contentPadding: PaddingValues,
     loading: Boolean,
     recipes: List<Recipe>,
     onChangeRecipeListScrollPosition: (Int) -> Unit,
@@ -40,21 +40,26 @@ fun RecipeList(
     ) {
         if (loading && recipes.isEmpty()) {
 
-            LoadingRecipeListShimmer(cardHeight = 250.dp)
+            LoadingRecipeListShimmer(
+                contentPadding = contentPadding,
+                cardHeight = 250.dp
+            )
 
         } else {
-            LazyColumn {
+            LazyColumn(contentPadding = contentPadding) {
                 itemsIndexed(items = recipes) { index, recipe ->
                     onChangeRecipeListScrollPosition(index)
                     if ((index + 1) >= (page * RecipeListViewModel.PAGE_SIZE) && !loading) {
                         onTriggeredEvent(RecipeListEvent.NextPageEvent)
                     }
-                    RecipeCard(recipe = recipe, onClick = {
-                        recipe.id?.let { recipeID ->
-                            AppLogger.info("recipeId: $recipeID")
-                            navController.navigate("${Screen.RecipeDetailsScreen.route}/${recipeID}")
-                        }
-                    })
+                    RecipeCard(
+                        recipe = recipe,
+                        onClick = {
+                            recipe.id?.let { recipeID ->
+                                AppLogger.info("recipeId: $recipeID")
+                                navController.navigate("${Screen.RecipeDetailsScreen.route}/${recipeID}")
+                            }
+                        })
                 }
             }
         }

@@ -50,8 +50,7 @@ android {
 }
 
 dependencies {
-
-
+    
     implementation(libs.google.material)
 
     implementation(libs.androidx.core.ktx)
@@ -67,13 +66,13 @@ dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.runtime.livedata)
     implementation(libs.androidx.compose.runtime.rxjava2)
-
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.icons.core)
     implementation(libs.androidx.compose.icons.extended)
     implementation(libs.androidx.compose.constraintlayout)
     implementation(libs.androidx.compose.activity)
     implementation(libs.androidx.compose.lifecycle)
+    implementation(libs.coil.compose)
 
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
@@ -82,10 +81,6 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
     ksp(libs.hilt.androidx.compiler)
-
-    implementation(libs.glide)
-    // Skip this if you don't want to use integration libraries or configure Glide.
-    ksp(libs.glide.compiler)
 
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.datastore.preferences.core)

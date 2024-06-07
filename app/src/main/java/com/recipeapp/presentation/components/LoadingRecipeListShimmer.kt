@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun LoadingRecipeListShimmer(
+    contentPadding: PaddingValues,
     cardHeight: Dp,
     padding: Dp = 16.dp
 ) {
@@ -61,7 +62,7 @@ fun LoadingRecipeListShimmer(
             Color.LightGray.copy(alpha = .9f),
         )
 
-        LazyColumn {
+        LazyColumn(contentPadding = contentPadding) {
             items(5){
                 ShimmerRecipeCardItem(
                     colors = colors,
