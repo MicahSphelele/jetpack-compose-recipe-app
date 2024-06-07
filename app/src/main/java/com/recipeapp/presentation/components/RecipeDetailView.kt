@@ -5,8 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,7 +20,7 @@ import com.recipeapp.domain.model.Recipe
 import com.recipeapp.util.loadPicture
 
 @Composable
-fun RecipeDetailView(recipe: Recipe) {
+fun RecipeDetailView(contentPaddingValues: PaddingValues, recipe: Recipe) {
 
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
         item {
@@ -55,7 +55,7 @@ fun RecipeDetailView(recipe: Recipe) {
                             text = title, modifier = Modifier
                                 .fillMaxWidth(0.85f)
                                 .wrapContentWidth(Alignment.Start),
-                            style = MaterialTheme.typography.h3
+                            style = MaterialTheme.typography.headlineMedium
                         )
 
                         Text(
@@ -64,12 +64,12 @@ fun RecipeDetailView(recipe: Recipe) {
                             modifier = Modifier
                                 .fillMaxSize()
                                 .background(
-                                    color = MaterialTheme.colors.primary,
+                                    color = MaterialTheme.colorScheme.primary,
                                     shape = CircleShape
                                 )
                                 .wrapContentSize(Alignment.Center)
                                 .align(Alignment.CenterVertically),
-                            style = MaterialTheme.typography.h5
+                            style = MaterialTheme.typography.labelMedium
                         )
                     }
                     recipe.publisher?.let { publisher ->
@@ -85,7 +85,7 @@ fun RecipeDetailView(recipe: Recipe) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(8.dp),
-                            style = MaterialTheme.typography.caption
+                            style = MaterialTheme.typography.labelMedium
                         )
                     }
 
@@ -95,7 +95,7 @@ fun RecipeDetailView(recipe: Recipe) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(start = 8.dp,bottom = 8.dp),
-                            style = MaterialTheme.typography.body1
+                            style = MaterialTheme.typography.labelLarge
                         )
                     }
                 }

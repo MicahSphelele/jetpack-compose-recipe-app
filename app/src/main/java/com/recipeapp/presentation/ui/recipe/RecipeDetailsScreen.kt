@@ -3,8 +3,9 @@ package com.recipeapp.presentation.ui.recipe
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
@@ -26,11 +27,11 @@ fun RecipeDetailsScreen(
     recipeId: Int
 ) {
     val viewModel = hiltViewModel<RecipeDetailViewModel>()
-    val scaffoldState = rememberScaffoldState()
     val isLoading = viewModel.isLoading.value
     val recipe = viewModel.recipe.value
     val errorState = viewModel.errorState.value
     val isDialogShowing = remember { mutableStateOf(false) }
+    val snackbarHostState = remember { SnackbarHostState() }
 
     val lifecycleOwner = LocalLifecycleOwner.current
 
@@ -51,7 +52,6 @@ fun RecipeDetailsScreen(
 
     if (!errorState.hasError) {
         Scaffold(
-            scaffoldState = scaffoldState,
             topBar = {
                 RecipeDetailsTopBar(title = "Recipe Detail", onBackArrowClick = {
                     navController.navigateUp()
@@ -59,8 +59,8 @@ fun RecipeDetailsScreen(
                     viewModel.recipe.value = null
                 })
             },
-            snackbarHost = { scaffoldState.snackbarHostState }
-        ) {
+            snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+        ) { innerPadding ->
             Box(modifier = Modifier.fillMaxSize()) {
 
                 if (isLoading && recipe == null) {
@@ -70,7 +70,7 @@ fun RecipeDetailsScreen(
 
                 } else {
                     recipe?.let {
-                        RecipeDetailView(recipe = it)
+                        RecipeDetailView(contentPaddingValues = innerPadding, recipe = it)
                     }
                 }
             }

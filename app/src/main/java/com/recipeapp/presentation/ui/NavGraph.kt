@@ -1,6 +1,5 @@
 package com.recipeapp.presentation.ui
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavHostController
@@ -13,7 +12,6 @@ import com.recipeapp.domain.model.screengraph.Screen
 import com.recipeapp.presentation.ui.recipe.RecipeDetailsScreen
 import com.recipeapp.presentation.ui.recipe_list.RecipeListScreen
 
-@ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
 fun RecipeAppNavGraph(

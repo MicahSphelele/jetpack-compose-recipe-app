@@ -10,10 +10,19 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bedtime
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -49,8 +58,8 @@ fun SearchAppBar(
     Surface(
         modifier = Modifier
             .fillMaxWidth(),
-        color = MaterialTheme.colors.surface,
-        elevation = 8.dp
+        color = MaterialTheme.colorScheme.surface,
+        shadowElevation = 8.dp
     ) {
 
         Column {
@@ -66,7 +75,7 @@ fun SearchAppBar(
                     modifier = Modifier
                         .fillMaxWidth(0.9f)
                         .padding(8.dp)
-                        .background(color = MaterialTheme.colors.surface),
+                        .background(color = MaterialTheme.colorScheme.surface),
                     label = { Text(text = "Search") },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,
@@ -82,7 +91,7 @@ fun SearchAppBar(
                             contentDescription = "Search Icon"
                         )
                     },
-                    textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
+                    textStyle = TextStyle(color = MaterialTheme.colorScheme.onSurface),
                 )
 
                 ConstraintLayout(
@@ -143,10 +152,6 @@ fun ContextMenu(
     expanded: MutableState<Boolean>,
     onChangeUiMode: (UiState) -> Unit
 ) {
-
-   // val context = LocalContext.current
-    //val isSystemInDarkTheme = isSystemInDarkTheme()
-
     DropdownMenu(
         expanded = expanded.value,
         onDismissRequest = { expanded.value = false },
@@ -155,26 +160,26 @@ fun ContextMenu(
 
             expanded.value = false
             onChangeUiMode(UiState.LIGHT)
-        }) {
+        }, text = {
             Text("Light")
-        }
+        })
 
-        Divider()
+        HorizontalDivider()
 
         DropdownMenuItem(onClick = {
             expanded.value = false
             onChangeUiMode(UiState.DARK)
-        }) {
+        }, text = {
             Text("Dark")
-        }
+        })
 
-        Divider()
+        HorizontalDivider()
 
         DropdownMenuItem(onClick = {
             expanded.value = false
             onChangeUiMode(UiState.SYSTEM)
-        }) {
+        }, text = {
             Text("System Default")
-        }
+        })
     }
 }

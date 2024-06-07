@@ -7,9 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ScaffoldState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,7 +20,6 @@ import com.recipeapp.domain.model.events.RecipeListEvent
 import com.recipeapp.presentation.ui.recipe_list.RecipeListViewModel
 import com.recipeapp.util.AppLogger
 
-@ExperimentalMaterialApi
 @Composable
 fun RecipeList(
     contentPaddingValues: PaddingValues,
@@ -31,14 +29,14 @@ fun RecipeList(
     onTriggeredEvent: (RecipeListEvent) -> Unit,
     navController: NavController,
     page: Int,
-    scaffoldState: ScaffoldState
+    snackbarHostState: SnackbarHostState
 ) {
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .fillMaxWidth()
-            .background(color = MaterialTheme.colors.surface)
+            .background(color = MaterialTheme.colorScheme.surface)
     ) {
         if (loading && recipes.isEmpty()) {
 
@@ -63,9 +61,9 @@ fun RecipeList(
 
         CircularIndeterminateProgressBar(isDisplayed = loading)
         DefaultSnackbar(
-            snackbarHostSate = scaffoldState.snackbarHostState,
+            snackbarHostSate = snackbarHostState,
             onDismiss = {
-                scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                snackbarHostState.currentSnackbarData?.dismiss()
             },
             modifier = Modifier.align(Alignment.BottomCenter)
         )

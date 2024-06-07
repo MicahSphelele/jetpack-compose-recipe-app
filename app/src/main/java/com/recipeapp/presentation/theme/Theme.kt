@@ -1,17 +1,15 @@
 package com.recipeapp.presentation.theme
 
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-private val LightThemeColors = lightColors(
+private val lightThemeColors = lightColorScheme(
     primary = Blue600,
-    primaryVariant = Blue400,
     onPrimary = Black2,
     secondary = Color.White,
-    secondaryVariant = Teal300,
     onSecondary = Black2,
     error = RedErrorDark,
     onError = RedErrorLight,
@@ -21,9 +19,8 @@ private val LightThemeColors = lightColors(
     onSurface = Black2,
 )
 
-private val DarkThemeColors = darkColors(
+private val darkThemeColors = darkColorScheme(
     primary = Blue700,
-    primaryVariant = Color.White,
     onPrimary = Color.White,
     secondary = Black1,
     onSecondary = Color.White,
@@ -40,9 +37,9 @@ fun AppTheme(
     content: @Composable () -> Unit,
 ) {
     MaterialTheme(
-        colors = if (darkTheme) DarkThemeColors else LightThemeColors,
-        typography = LatoTypography,
-        shapes = AppShapes
+        colorScheme = if (darkTheme) darkThemeColors else lightThemeColors,
+        typography = latoTypography,
+        shapes = shapes
     ){
         content()
     }

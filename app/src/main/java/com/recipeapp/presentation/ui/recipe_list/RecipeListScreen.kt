@@ -1,9 +1,9 @@
 package com.recipeapp.presentation.ui.recipe_list
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,7 +17,6 @@ import com.recipeapp.presentation.components.RecipeList
 import com.recipeapp.presentation.components.SearchAppBar
 
 @ExperimentalComposeUiApi
-@ExperimentalMaterialApi
 @Composable
 fun RecipeListScreen(
     navController: NavController,
@@ -27,11 +26,11 @@ fun RecipeListScreen(
     val recipes = viewModel.recipes.value
     val query = viewModel.query.value
     val selectedCategory = viewModel.selectedFoodCategory.value
-    val scaffoldState = rememberScaffoldState()
     val page = viewModel.page.intValue
     val errorState = viewModel.errorState.value
     val isLoading = viewModel.loading.value
     val isDialogShowing = remember { mutableStateOf(false) }
+    val snackbarHostState = remember { SnackbarHostState() }
 
     if (!errorState.hasError) {
         Scaffold(
@@ -45,9 +44,8 @@ fun RecipeListScreen(
                     onChangeUiMode = onChangeTheme
                 )
             },
-            scaffoldState = scaffoldState,
             snackbarHost = {
-                scaffoldState.snackbarHostState
+                SnackbarHost(hostState = snackbarHostState)
             }
 
         ) {
@@ -59,7 +57,7 @@ fun RecipeListScreen(
                 onTriggeredEvent = viewModel::onTriggeredEvent,
                 navController = navController,
                 page = page,
-                scaffoldState = scaffoldState
+                snackbarHostState = snackbarHostState
             )
         }
         return

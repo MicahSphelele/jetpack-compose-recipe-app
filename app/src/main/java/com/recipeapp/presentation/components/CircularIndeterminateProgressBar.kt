@@ -1,8 +1,8 @@
 package com.recipeapp.presentation.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -20,7 +20,7 @@ fun CircularIndeterminateProgressBar(
                 .padding(50.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            CircularProgressIndicator(color = MaterialTheme.colors.primary)
+            CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
         }
     }
     /*if (isDisplayed) {
@@ -69,7 +69,7 @@ fun CircularIndeterminateProgressBar(isDisplayed: Boolean, verticalBias: Float) 
                     end.linkTo(parent.end)
                     start.linkTo(parent.start)
                 },
-                color = MaterialTheme.colors.primary
+                color = MaterialTheme.colorScheme.primary
             )
         }
 
