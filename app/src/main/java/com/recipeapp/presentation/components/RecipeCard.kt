@@ -3,11 +3,16 @@ package com.recipeapp.presentation.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,13 +31,13 @@ import com.recipeapp.util.loadPicture
 fun RecipeCard(recipe: Recipe,onClick:() -> Unit){
     
     Card(
-        shape = MaterialTheme.shapes.small,
+        shape = MaterialTheme.shapes.medium,
         modifier = Modifier
             .padding(top = 6.dp, bottom = 6.dp, start = 6.dp, end = 6.dp)
             .fillMaxWidth()
             .clickable(onClick = onClick),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
 
@@ -61,7 +66,7 @@ fun RecipeCard(recipe: Recipe,onClick:() -> Unit){
 
                     Text(text = title, modifier = Modifier
                         .fillMaxWidth(0.85f),
-                        style = MaterialTheme.typography.headlineMedium)
+                        style = MaterialTheme.typography.headlineSmall)
 
                     Text(text = recipe.rating.toString(),
                         textAlign = TextAlign.Center,color = Color.White,
